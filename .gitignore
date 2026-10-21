@@ -24,3 +24,6 @@ source/
 # The assistant files, generated from the pages
 public/llms.txt
 public/llms-full.txt
+
+# The screenshots of the design review
+*.png
