@@ -40,6 +40,11 @@ jobs:
       - name: Install the dependencies
         run: npm ci
 
+      - name: Install the dependencies of the library
+        # The types of the library are needed to generate the API reference.
+        working-directory: source
+        run: npm install --no-audit --no-fund --ignore-scripts
+
       - name: Build the website
         run: npm run build
         env:
