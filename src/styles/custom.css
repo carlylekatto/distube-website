@@ -11,8 +11,16 @@
  * and no flash of an unstyled page.
  */
 
-@import "@fontsource-variable/familjen-grotesk";
-@import "@fontsource-variable/azeret-mono";
+/*
+ * The fonts are self hosted: the page never waits for a third party, and it
+ * never flashes an unstyled text.
+ *
+ * The path is relative on purpose: the bare specifier is not resolved by the
+ * CSS pipeline of Astro, and the `url()` of the font files is then resolved
+ * against the package itself.
+ */
+@import "../../node_modules/@fontsource-variable/familjen-grotesk/index.css";
+@import "../../node_modules/@fontsource-variable/azeret-mono/index.css";
 
 /* ── The tokens ──────────────────────────────────────────────────────────── */
 
