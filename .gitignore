@@ -20,3 +20,7 @@ public/fonts/
 
 # The sources of the library, checked out next to the website
 source/
+
+# The assistant files, generated from the pages
+public/llms.txt
+public/llms-full.txt

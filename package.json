@@ -7,9 +7,10 @@
   "scripts": {
     "dev": "npm run fonts && astro dev",
     "start": "npm run fonts && astro dev",
-    "build": "npm run fonts && astro build",
+    "build": "npm run fonts && astro build && npm run llms",
     "preview": "astro preview",
     "fonts": "node scripts/copy-fonts.mjs",
+    "llms": "node scripts/llms.mjs",
     "astro": "astro"
   },
   "dependencies": {

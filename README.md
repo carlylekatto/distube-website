@@ -59,6 +59,17 @@ npm run build
 node scripts/shot.cjs "/" shot.png 1440 1050
 ```
 
+## The assistant files
+
+The site ships the two files an assistant reads to understand the library:
+[llms.txt](https://llmstxt.org/) is the index of the pages, and `llms-full.txt`
+holds the whole documentation in one file. They are generated from the pages of
+the site, so they never go out of date.
+
+```bash
+npm run llms
+```
+
 ## Deployment
 
 Every push on `main` builds the website and deploys it to GitHub Pages, at
