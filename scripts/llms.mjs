@@ -13,7 +13,11 @@ import { fileURLToPath } from "node:url";
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const docsDir = path.join(root, "src", "content", "docs");
-const outDir = path.join(root, "public");
+
+// The files are written where the build puts them: the script runs after the
+// build, so the public directory has already been copied to the output.
+const distDir = path.join(root, "dist");
+const outDir = (await readdir(distDir).then(() => distDir).catch(() => path.join(root, "public")));
 
 const SITE = "https://carlylekatto.github.io/distube-website";
 
