@@ -24,8 +24,10 @@ jobs:
       - name: Checkout the DisTube sources
         uses: actions/checkout@v4
         with:
-          repository: skick1234/DisTube
-          ref: main
+          # The sources of the library. Change it to skick1234/DisTube once the
+          # v6 branch is merged upstream.
+          repository: carlylekatto/DisTube
+          ref: feat/v6-foundation
           path: source
 
       - name: Setup Node

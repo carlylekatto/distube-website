@@ -16,3 +16,6 @@ src/content/docs/api/
 .idea/
 .vscode/
 .DS_Store
+
+# The sources of the library, checked out next to the website
+source/

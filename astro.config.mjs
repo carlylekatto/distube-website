@@ -2,9 +2,10 @@ import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import starlightTypeDoc, { typeDocSidebarGroup } from "starlight-typedoc";
 
-// The DisTube sources are checked out next to the website. The path is
-// configurable so the CI and the local development use the same config.
-const source = process.env.DISTUBE_SOURCE ?? "../DisTube";
+// The DisTube sources are checked out next to the website, in the "source"
+// directory. The path is configurable so the CI and the local development use
+// the same config.
+const source = process.env.DISTUBE_SOURCE ?? "./source";
 
 const site = "https://carlylekatto.github.io";
 const base = "/distube-website";
@@ -63,7 +64,9 @@ export default defineConfig({
       plugins: [
         starlightTypeDoc({
           entryPoints: [`${source}/src/index.ts`],
-          tsconfig: `${source}/tsconfig.json`,
+          // The website has its own tsconfig for the documentation: the build
+          // does not depend on the configuration of the library.
+          tsconfig: "./typedoc-tsconfig.json",
           output: "api",
           pagination: true,
           sidebar: {
