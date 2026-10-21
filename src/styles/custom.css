@@ -791,6 +791,14 @@ body {
 
 .sl-markdown-content h2 {
   font-size: 26px;
+}
+
+/*
+ * The rule of a section belongs to the wrapper of the heading, not to the
+ * heading itself: Starlight makes the heading inline so the anchor link can
+ * sit next to it, and a border on an inline box only spans its text.
+ */
+.sl-markdown-content .sl-heading-wrapper.level-h2 {
   border-top: 1px solid var(--colors-hairline-cool);
   padding-top: 2rem;
   margin-top: 2.5rem;
