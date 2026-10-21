@@ -1,56 +1,160 @@
 ---
 /**
- * The waveform of the hero.
- *
- * It is generated from a fixed seed, so it is the same on every build. The
- * shape follows a real audio waveform: a silent centre, symmetric peaks, and
- * quiet passages that fade out.
+ * DisTube Audio Spectrum Analyzer
+ * Engineered for clarity: clean emerald frequency levels inside canvas-night chrome.
  */
-const SEED = 0x2f6e21;
+interface Props {
+  height?: number;
+  class?: string;
+  interactive?: boolean;
+}
 
-const random = (() => {
-  let state = SEED;
-  return () => {
-    state = (state * 1664525 + 1013904223) % 4294967296;
-    return state / 4294967296;
-  };
-})();
-
-const BARS = 320;
-const HEIGHT = 200;
-const CENTER = HEIGHT / 2;
-const PITCH = 100 / BARS;
-
-const bars = Array.from({ length: BARS }, (_, index) => {
-  // A slow envelope, so the waveform has quiet and loud passages.
-  const envelope = 0.2 + 0.8 * Math.abs(Math.sin(index / 24)) * (0.5 + 0.5 * Math.sin(index / 7.3 + 1.2));
-  const body = Math.pow(random(), 1.9);
-  const amplitude = Math.max(1.5, envelope * body * (CENTER - 10));
-  return {
-    x: index * PITCH,
-    amplitude,
-    opacity: 0.24 + Math.min(0.76, (amplitude / (CENTER - 10)) * 0.9),
-  };
-});
+const { height = 80, class: className = "", interactive = true } = Astro.props;
 ---
 
-<svg
-  class="waveform"
-  viewBox={`0 0 100 ${HEIGHT}`}
-  preserveAspectRatio="none"
-  role="img"
-  aria-label="A waveform"
->
-  <line x1="0" y1={CENTER} x2="100" y2={CENTER} class="waveform__axis" />
-  {
-    bars.map((bar) => (
-      <rect
-        x={bar.x}
-        y={CENTER - bar.amplitude}
-        width={PITCH * 0.55}
-        height={bar.amplitude * 2}
-        opacity={bar.opacity}
-      />
-    ))
+<div class={`audio-visualizer-container ${className}`} data-interactive={interactive ? "true" : "false"}>
+  <canvas class="audio-visualizer-canvas" height={height * 2}></canvas>
+</div>
+
+<script>
+  function initVisualizers() {
+    const containers = document.querySelectorAll<HTMLElement>(".audio-visualizer-container");
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    containers.forEach((container) => {
+      const canvas = container.querySelector<HTMLCanvasElement>(".audio-visualizer-canvas");
+      if (!canvas) return;
+
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+
+      let animationId: number;
+      let width = 0;
+      let height = 0;
+      const barCount = 48;
+      const bars: { height: number; target: number; phase: number }[] = [];
+
+      for (let i = 0; i < barCount; i++) {
+        bars.push({
+          height: 8 + Math.random() * 24,
+          target: 12 + Math.random() * 40,
+          phase: Math.random() * Math.PI * 2,
+        });
+      }
+
+      function resize() {
+        if (!canvas) return;
+        const rect = container.getBoundingClientRect();
+        width = rect.width;
+        height = rect.height || 80;
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        ctx?.scale(dpr, dpr);
+      }
+
+      let time = 0;
+      let hoveredIndex = -1;
+
+      if (container.dataset.interactive === "true") {
+        container.addEventListener("mousemove", (e) => {
+          const rect = container.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          hoveredIndex = Math.floor((x / width) * barCount);
+        });
+
+        container.addEventListener("mouseleave", () => {
+          hoveredIndex = -1;
+        });
+      }
+
+      function draw() {
+        if (!ctx) return;
+        ctx.clearRect(0, 0, width, height);
+
+        const barWidth = Math.max(2, (width / barCount) * 0.65);
+        const gap = (width - barWidth * barCount) / (barCount - 1);
+        const bottomY = height - 4;
+
+        time += 0.04;
+
+        // Signature Supabase Emerald
+        const primaryEmerald = "rgba(62, 207, 142, ";
+        const softEmerald = "rgba(74, 222, 128, ";
+
+        for (let i = 0; i < barCount; i++) {
+          const bar = bars[i];
+          const wave = Math.sin(time * 2 + i * 0.22) * Math.cos(time * 1.1 + i * 0.12);
+          const envelope = Math.sin((i / (barCount - 1)) * Math.PI);
+          
+          let target = (12 + wave * 32 + Math.sin(time * 3 + bar.phase) * 12) * envelope;
+          
+          if (hoveredIndex !== -1) {
+            const dist = Math.abs(i - hoveredIndex);
+            if (dist < 6) {
+              target += (6 - dist) * 10;
+            }
+          }
+
+          if (prefersReducedMotion) {
+            target = 22 * envelope;
+          }
+
+          bar.height += (target - bar.height) * 0.12;
+          const currentH = Math.max(3, Math.min(height - 8, bar.height));
+          const x = i * (barWidth + gap);
+          const y = bottomY - currentH;
+
+          // Vertical gradient from emerald to soft emerald
+          const grad = ctx.createLinearGradient(0, y, 0, bottomY);
+          grad.addColorStop(0, `${softEmerald}0.95)`);
+          grad.addColorStop(1, `${primaryEmerald}0.45)`);
+
+          ctx.fillStyle = grad;
+          // Clean 2px corner radius for technical audio look
+          ctx.beginPath();
+          ctx.roundRect(x, y, barWidth, currentH, [2, 2, 0, 0]);
+          ctx.fill();
+        }
+
+        if (!prefersReducedMotion) {
+          animationId = requestAnimationFrame(draw);
+        }
+      }
+
+      resize();
+      draw();
+
+      const ro = new ResizeObserver(() => {
+        resize();
+        if (prefersReducedMotion) draw();
+      });
+      ro.observe(container);
+    });
   }
-</svg>
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initVisualizers);
+  } else {
+    initVisualizers();
+  }
+  document.addEventListener("astro:page-load", initVisualizers);
+</script>
+
+<style>
+  .audio-visualizer-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 70px;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+
+  .audio-visualizer-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+</style>

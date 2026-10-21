@@ -1,68 +1,83 @@
 ---
 title: DisTube
-description: A powerful Discord.js module for simplifying music commands and effortless playback of various sources with integrated audio filters.
+description: Audio playback library for discord.js bots with multi-source plugins and real-time audio filters.
 template: splash
 hero:
-  tagline: Multi-source playback, live audio filters, autoplay and a plugin system — all typed.
+  tagline: Multi-source playback, live audio filters, autoplay, and plugin extractors with complete TypeScript types.
 ---
 
 import { Tabs, TabItem } from "@astrojs/starlight/components";
 
 <div class="landing__body">
 
-## What it does
+<section class="landing-section">
+  <div class="section-header">
+    <h2 class="section-title">Features</h2>
+    <p class="section-desc">DisTube manages audio streaming and queue operations for discord.js bots.</p>
+  </div>
 
-<div class="ruled">
-  <div class="ruled__row">
-    <span class="ruled__index">01</span>
-    <span class="ruled__name">Multi-source playback</span>
-    <span class="ruled__detail">
-      YouTube, Spotify, SoundCloud, Tidal, Deezer, Bandcamp and 700+ more sites, through plugins you
-      choose. DisTube ships no source of its own.
-    </span>
-  </div>
-  <div class="ruled__row">
-    <span class="ruled__index">02</span>
-    <span class="ruled__name">Live audio filters</span>
-    <span class="ruled__detail">
-      Fifteen filters — nightcore, 3D, karaoke, bass boost — applied while the track plays, on a
-      per-queue basis.
-    </span>
-  </div>
-  <div class="ruled__row">
-    <span class="ruled__index">03</span>
-    <span class="ruled__name">Autoplay</span>
-    <span class="ruled__detail">
-      The related tracks of the source keep the queue going, without any extra work.
-    </span>
-  </div>
-  <div class="ruled__row">
-    <span class="ruled__index">04</span>
-    <span class="ruled__name">A real plugin system</span>
-    <span class="ruled__detail">
-      Write your own source in a few lines. It can search, it can play, and it can hand the audio of
-      a track that it cannot play itself to another plugin.
-    </span>
-  </div>
-  <div class="ruled__row">
-    <span class="ruled__index">05</span>
-    <span class="ruled__name">Typed from the ground up</span>
-    <span class="ruled__detail">
-      Every option, event and error is typed. The editor tells you what is possible, and the
-      reference tells you what it does.
-    </span>
-  </div>
-  <div class="ruled__row">
-    <span class="ruled__index">06</span>
-    <span class="ruled__name">It does not crash</span>
-    <span class="ruled__detail">
-      Errors are events, not crashes. A missing listener never takes the bot down, and a track that
-      stops producing audio is skipped instead of playing silence forever.
-    </span>
-  </div>
-</div>
+  <div class="features-grid">
+    <div class="card-feature-light">
+      <h3 class="card-title">Multi-source playback</h3>
+      <p class="card-desc">
+        Play audio from YouTube, Spotify, SoundCloud, Deezer, Bandcamp, and other services using source plugins. DisTube does not ship default sources, keeping the core install light.
+      </p>
+      <div class="card-tags">
+        <span class="pill-tag-soft">YouTube</span>
+        <span class="pill-tag-soft">Spotify</span>
+        <span class="pill-tag-soft">SoundCloud</span>
+        <span class="pill-tag-soft">Deezer</span>
+      </div>
+    </div>
 
-## A whole bot in twenty lines
+    <div class="card-feature-light">
+      <h3 class="card-title">Live audio filters</h3>
+      <p class="card-desc">
+        Apply fifteen built-in audio filters while tracks play, on a per-guild basis. Change nightcore, 3D audio, and bass boost without restarting the stream.
+      </p>
+      <div class="card-tags">
+        <span class="pill-tag-soft">Nightcore</span>
+        <span class="pill-tag-soft">Bass boost</span>
+        <span class="pill-tag-soft">3D audio</span>
+        <span class="pill-tag-soft">Karaoke</span>
+      </div>
+    </div>
+
+    <div class="card-feature-light">
+      <h3 class="card-title">Autoplay</h3>
+      <p class="card-desc">
+        When a queue finishes, DisTube fetches related tracks from the source plugin to keep playback going without manual intervention.
+      </p>
+    </div>
+
+    <div class="card-feature-light">
+      <h3 class="card-title">Plugin system</h3>
+      <p class="card-desc">
+        Write custom audio extractors in a few lines of code. Plugins can search, validate links, resolve streams, or pass unplayable tracks to other handlers.
+      </p>
+    </div>
+
+    <div class="card-feature-light">
+      <h3 class="card-title">TypeScript definitions</h3>
+      <p class="card-desc">
+        Every option, event listener, and error code is typed. Editors provide autocomplete for queue states, song metadata, and plugin options.
+      </p>
+    </div>
+
+    <div class="card-feature-light">
+      <h3 class="card-title">Event-based error handling</h3>
+      <p class="card-desc">
+        Errors emit as standard events rather than unhandled process exceptions. A missing error listener will not crash your Discord bot.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="landing-section">
+  <div class="section-header">
+    <h2 class="section-title">A Discord bot in twenty lines</h2>
+    <p class="section-desc">Initialize DisTube with your discord.js client and handle message commands.</p>
+  </div>
 
 ```js
 import { DisTube, Events } from "distube";
@@ -80,7 +95,7 @@ const client = new Client({
 const distube = new DisTube(client);
 
 distube.on(Events.PLAY_SONG, (queue, song) => {
-  queue.textChannel.send(`Playing **${song.name}** — ${song.formattedDuration}`);
+  queue.textChannel.send(`Playing: ${song.name} (${song.formattedDuration})`);
 });
 
 client.on("messageCreate", async (message) => {
@@ -97,8 +112,13 @@ client.on("messageCreate", async (message) => {
 
 client.login(process.env.DISCORD_TOKEN);
 ```
+</section>
 
-## Pick your sources
+<section class="landing-section">
+  <div class="section-header">
+    <h2 class="section-title">Pick your sources</h2>
+    <p class="section-desc">Install plugins for the services your bot needs.</p>
+  </div>
 
 <Tabs syncKey="sources">
   <TabItem label="YouTube">
@@ -121,19 +141,16 @@ client.login(process.env.DISCORD_TOKEN);
     });
     ```
   </TabItem>
-  <TabItem label="Your own">
+  <TabItem label="Custom extractor">
     ```js
     import { ExtractorPlugin } from "distube";
 
-    class MyPlugin extends ExtractorPlugin {
+    class CustomExtractor extends ExtractorPlugin {
       async validate(url) {
-        return url.startsWith("https://example.com/");
+        return url.startsWith("https://audio.example.com/");
       }
       async resolve(url, options) {
-        // Return a Song or a Playlist
-      }
-      async searchSong(query, options) {
-        // Return a Song, or null
+        // Return a Song or Playlist
       }
       async getStreamURL(song) {
         return song.url;
@@ -142,12 +159,46 @@ client.login(process.env.DISCORD_TOKEN);
     ```
   </TabItem>
 </Tabs>
+</section>
 
-## Where to go next
+<section class="landing-section">
+  <div class="section-header">
+    <h2 class="section-title">Documentation guides</h2>
+    <p class="section-desc">Setup requirements, voice configurations, and API documentation.</p>
+  </div>
 
-- [Installation](/getting-started/installation/) — the requirements, and the two system tools to install.
-- [Quick start](/getting-started/quick-start/) — the commands, the events and the queue.
-- [Plugin system](/guide/plugins/) — how a source is written, and how to find one.
-- [Upgrading](/guide/upgrade/) — what changed in v6, and how to migrate.
+  <div class="nav-cards-grid">
+    <a class="nav-card" href="/getting-started/installation/">
+      <div class="nav-card__meta">Setup</div>
+      <h3 class="nav-card__title">Installation</h3>
+      <p class="nav-card__desc">Requirements, FFmpeg installation, and Discord voice encryption libraries.</p>
+    </a>
+    <a class="nav-card" href="/getting-started/quick-start/">
+      <div class="nav-card__meta">Guide</div>
+      <h3 class="nav-card__title">Quick start</h3>
+      <p class="nav-card__desc">Basic playback commands, voice state checks, and queue listeners.</p>
+    </a>
+    <a class="nav-card" href="/guide/plugins/">
+      <div class="nav-card__meta">Architecture</div>
+      <h3 class="nav-card__title">Plugin system</h3>
+      <p class="nav-card__desc">How sources are parsed, stream resolution, and custom extractors.</p>
+    </a>
+    <a class="nav-card" href="/guide/filters/">
+      <div class="nav-card__meta">DSP</div>
+      <h3 class="nav-card__title">Audio filters</h3>
+      <p class="nav-card__desc">Applying audio filters, custom FFmpeg arguments, and volume control.</p>
+    </a>
+    <a class="nav-card" href="/guide/upgrade/">
+      <div class="nav-card__meta">Migration</div>
+      <h3 class="nav-card__title">Upgrade guide</h3>
+      <p class="nav-card__desc">Migration instructions and changes when moving from v5 to v6.</p>
+    </a>
+    <a class="nav-card" href="/api/">
+      <div class="nav-card__meta">Reference</div>
+      <h3 class="nav-card__title">API reference</h3>
+      <p class="nav-card__desc">Methods, options, classes, and event signatures for DisTube.</p>
+    </a>
+  </div>
+</section>
 
 </div>

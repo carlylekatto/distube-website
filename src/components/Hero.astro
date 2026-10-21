@@ -1,48 +1,227 @@
 ---
 import Waveform from "./Waveform.astro";
 
-const { tagline } = Astro.locals.starlightRoute.entry.data.hero ?? {};
+const route = Astro.locals.starlightRoute;
+const { entry } = route;
+const is404 = entry.id === "404" || entry.data.title === "Page not found";
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+const { tagline } = entry.data.hero ?? {
+  tagline: "DisTube is an audio playback library for discord.js bots. It handles multi-source streaming, real-time audio filters, and queue management with full TypeScript types.",
+};
 ---
 
-<div class="landing">
-  <div class="landing__wave">
-    <Waveform />
-  </div>
-
-  <div class="landing__inner">
-    <h1 class="landing__headline">Play music in Discord.</h1>
-    {tagline && <p class="landing__tagline">{tagline}</p>}
-
-    <div class="landing__actions">
-      <a class="sl-button sl-button--primary" href="/getting-started/quick-start/">Get started</a>
-      <a class="sl-button sl-button--secondary" href="/getting-started/installation/">Installation</a>
-      <a class="sl-button sl-button--minimal" href="/api/">API reference</a>
+{
+  is404 ? (
+    <div class="landing-404">
+      <div class="landing-404__inner">
+        <span class="pill-tag-soft">404</span>
+        <h1 class="landing-404__title">Page not found</h1>
+        <p class="landing-404__desc">
+          The page or documentation file you requested does not exist. Check the URL or return to the overview.
+        </p>
+        <div class="landing-404__actions">
+          <a class="button-primary-green" href={`${base}/`}>
+            Return to overview
+          </a>
+          <a class="button-secondary-outline" href={`${base}/getting-started/quick-start/`}>
+            Quick start
+          </a>
+        </div>
+      </div>
     </div>
+  ) : (
+    <div class="landing">
+      <div class="landing__hero-grid">
+        <!-- Left Column: Headline, CTAs, Package Manager Terminal -->
+        <div class="landing__content">
+          <div class="release-pill">
+            <span class="release-pill__dot"></span>
+            <span class="release-pill__text">DisTube 6.0 for discord.js 14</span>
+          </div>
 
-    <div class="install">
-      <span class="install__manager">npm</span>
-      <code class="install__command">install distube @discordjs/voice @discordjs/opus</code>
+          <h1 class="landing__headline">
+            Audio playback for <span class="landing__headline-accent">Discord bots</span>.
+          </h1>
+
+          <p class="landing__tagline">{tagline}</p>
+
+          <div class="landing__actions">
+            <a class="button-primary-green" href={`${base}/getting-started/quick-start/`}>
+              Get started
+            </a>
+            <a class="button-secondary-outline" href={`${base}/getting-started/installation/`}>
+              Installation
+            </a>
+            <a class="button-secondary-outline" href={`${base}/api/`}>
+              API reference
+            </a>
+          </div>
+
+          <!-- Deep Canvas Night Terminal -->
+          <div class="terminal-install" data-pkg-terminal>
+            <div class="terminal-install__tabs">
+              <button class="pkg-tab is-active" data-pkg="npm">npm</button>
+              <button class="pkg-tab" data-pkg="pnpm">pnpm</button>
+              <button class="pkg-tab" data-pkg="yarn">yarn</button>
+              <button class="pkg-tab" data-pkg="bun">bun</button>
+            </div>
+            <div class="terminal-install__body">
+              <code class="terminal-install__cmd" data-pkg-cmd>npm install distube @discordjs/voice @discordjs/opus</code>
+              <button class="terminal-install__copy" data-copy-btn aria-label="Copy command" title="Copy to clipboard">
+                <svg class="icon-copy" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+                  <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
+                </svg>
+                <svg class="icon-check" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display: none;">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Composited Product UI Mockup (12px rounded, 1px hairline, level 2 shadow) -->
+        <div class="landing__mockup-pane">
+          <div class="ui-mockup">
+            <!-- Window Chrome -->
+            <div class="ui-mockup__chrome">
+              <div class="chrome-dots">
+                <span class="chrome-dot"></span>
+                <span class="chrome-dot"></span>
+                <span class="chrome-dot"></span>
+              </div>
+              <div class="chrome-status">
+                <span class="status-indicator"></span>
+                <span class="status-text">queue.status: playing · 48,000 Hz PCM</span>
+              </div>
+            </div>
+
+            <!-- Dashboard Stream Pane -->
+            <div class="ui-mockup__panel">
+              <div class="stream-row">
+                <div class="stream-badge">NOW STREAMING</div>
+                <div class="stream-meta">
+                  <div class="stream-title">Late Night Lo-Fi Session</div>
+                  <div class="stream-details">YouTube plugin · 3:24 elapsed · Bitrate 160 kbps</div>
+                </div>
+              </div>
+
+              <!-- Audio Spectrum Visualizer inside canvas-night container -->
+              <div class="stream-spectrum">
+                <Waveform height={75} />
+              </div>
+
+              <!-- Active DSP Filter Status -->
+              <div class="stream-footer">
+                <div class="dsp-label">Active DSP filters:</div>
+                <div class="dsp-tags">
+                  <span class="dsp-tag is-active">nightcore</span>
+                  <span class="dsp-tag is-active">bassboost</span>
+                  <span class="dsp-tag">3d</span>
+                  <span class="dsp-tag">echo</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Queue Secondary Sub-Pane -->
+            <div class="ui-mockup__queue-list">
+              <div class="queue-item is-playing">
+                <span class="queue-idx">01</span>
+                <span class="queue-title">Late Night Lo-Fi Session</span>
+                <span class="queue-badge">Playing</span>
+                <span class="queue-duration">3:24</span>
+              </div>
+              <div class="queue-item">
+                <span class="queue-idx">02</span>
+                <span class="queue-title">Chillhop Essentials - Autumn</span>
+                <span class="queue-badge queue-badge--muted">Queued</span>
+                <span class="queue-duration">2:48</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Specs & Technical Data Row -->
+      <div class="landing__specs">
+        <dl class="specs-grid">
+          <div class="spec-card">
+            <dt class="spec-card__value">6.0.0</dt>
+            <dd class="spec-card__label">Current release version</dd>
+          </div>
+          <div class="spec-card">
+            <dt class="spec-card__value">15</dt>
+            <dd class="spec-card__label">Built-in audio filters</dd>
+          </div>
+          <div class="spec-card">
+            <dt class="spec-card__value">13</dt>
+            <dd class="spec-card__label">Typed lifecycle events</dd>
+          </div>
+          <div class="spec-card">
+            <dt class="spec-card__value">48 kHz</dt>
+            <dd class="spec-card__label">Audio stream sample rate</dd>
+          </div>
+        </dl>
+      </div>
     </div>
-  </div>
+  )
+}
 
-  <div class="landing__inner">
-    <dl class="specs">
-      <div class="specs__item">
-        <dt class="specs__value">6.0.0</dt>
-        <dd class="specs__label">the current version</dd>
-      </div>
-      <div class="specs__item">
-        <dt class="specs__value">15</dt>
-        <dd class="specs__label">built-in audio filters</dd>
-      </div>
-      <div class="specs__item">
-        <dt class="specs__value">13</dt>
-        <dd class="specs__label">events to listen to</dd>
-      </div>
-      <div class="specs__item">
-        <dt class="specs__value">48 kHz</dt>
-        <dd class="specs__label">the sample rate of the audio</dd>
-      </div>
-    </dl>
-  </div>
-</div>
+<script>
+  function setupTerminal() {
+    const pkgCommands: Record<string, string> = {
+      npm: "npm install distube @discordjs/voice @discordjs/opus",
+      pnpm: "pnpm add distube @discordjs/voice @discordjs/opus",
+      yarn: "yarn add distube @discordjs/voice @discordjs/opus",
+      bun: "bun add distube @discordjs/voice @discordjs/opus",
+    };
+
+    const terminal = document.querySelector("[data-pkg-terminal]");
+    if (!terminal) return;
+
+    const tabs = terminal.querySelectorAll<HTMLButtonElement>(".pkg-tab");
+    const cmdEl = terminal.querySelector<HTMLElement>("[data-pkg-cmd]");
+    const copyBtn = terminal.querySelector<HTMLButtonElement>("[data-copy-btn]");
+    const iconCopy = copyBtn?.querySelector<SVGElement>(".icon-copy");
+    const iconCheck = copyBtn?.querySelector<SVGElement>(".icon-check");
+
+    let activePkg = "npm";
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        tabs.forEach((t) => t.classList.remove("is-active"));
+        tab.classList.add("is-active");
+        const pkg = tab.dataset.pkg || "npm";
+        activePkg = pkg;
+        if (cmdEl) cmdEl.textContent = pkgCommands[pkg] || pkgCommands.npm;
+      });
+    });
+
+    copyBtn?.addEventListener("click", async () => {
+      const textToCopy = pkgCommands[activePkg] || (cmdEl ? cmdEl.textContent || "" : "");
+      try {
+        await navigator.clipboard.writeText(textToCopy);
+        if (iconCopy && iconCheck) {
+          iconCopy.style.display = "none";
+          iconCheck.style.display = "block";
+          copyBtn.classList.add("is-copied");
+          setTimeout(() => {
+            iconCopy.style.display = "block";
+            iconCheck.style.display = "none";
+            copyBtn.classList.remove("is-copied");
+          }, 2000);
+        }
+      } catch (err) {
+        console.error("Copy failed:", err);
+      }
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setupTerminal);
+  } else {
+    setupTerminal();
+  }
+  document.addEventListener("astro:page-load", setupTerminal);
+</script>

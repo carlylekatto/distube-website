@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "runs": [
+    {
+      "timestamp": "2026-10-22T06:36:00Z",
+      "scope": "app",
+      "genre": "atmospheric",
+      "macrostructure": "Marquee Hero",
+      "theme": "Obsidian Studio",
+      "accent": "oklch(62% 0.24 22)",
+      "fonts": {
+        "display": "Familjen Grotesk Variable",
+        "body": "Familjen Grotesk Variable",
+        "mono": "Azeret Mono Variable"
+      },
+      "system": "design.md"
+    }
+  ]
+}

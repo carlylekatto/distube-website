@@ -36,7 +36,7 @@ for (const { package: packageName, family } of FAMILIES) {
     if (block.includes("italic")) continue;
 
     await copyFile(path.join(packageDir, "files", file), path.join(outDir, file));
-    stylesheet += `\n${block.replace(/url\(\.\/files\//g, "url(/fonts/")}\n`;
+    stylesheet += `\n${block.replace(/url\(\.\/files\//g, "url(./")}\n`;
   }
 
   const files = await readdir(path.join(packageDir, "files"));
