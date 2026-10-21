@@ -77,7 +77,9 @@ export default defineConfig({
             // The theme of the library is not used: the API reference follows
             // the theme of the website.
             plugin: ["typedoc-plugin-markdown"],
-            readme: "none",
+            // The overview of the API becomes the index of the section.
+            readme: "./api-readme.md",
+            entryFileName: "index",
             excludePrivate: true,
             excludeInternal: true,
             gitRevision: "",
