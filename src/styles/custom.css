@@ -1,124 +1,709 @@
 /*
- * The theme of the website.
+ * The design system of the website.
  *
- * DisTube is red, so the accent color follows the brand. The typography uses
- * Space Grotesk for the headings and Space Mono for the code, which gives the
- * site the same identity as the API reference of the library.
+ * The subject of the site is audio: a Discord music library. The identity
+ * comes from that world — a mixing console, a waveform, a signal light. The
+ * site reads like the panel of a studio device: warm graphite, hairline
+ * rules, one red signal colour and one amber lamp.
+ *
+ * The type is Familjen Grotesk for the prose and Azeret Mono for the code and
+ * the technical values. Both are self hosted, so there is no external request
+ * and no flash of an unstyled page.
  */
 
+@import "@fontsource-variable/familjen-grotesk";
+@import "@fontsource-variable/azeret-mono";
+
+/* ── The tokens ──────────────────────────────────────────────────────────── */
+
 :root {
-  /* The brand color of DisTube, and its shades. */
-  --sl-color-accent-low: #33161a;
+  --sl-font: "Familjen Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+  --sl-font-mono: "Azeret Mono Variable", ui-monospace, "SFMono-Regular", monospace;
+
+  /* The panel of the device. */
+  --panel: #14120f;
+  --panel-raised: #1c1a16;
+  --panel-inset: #100e0c;
+  --line: #2f2b24;
+  --line-strong: #4a4339;
+
+  /* The signal, and the lamp next to it. */
+  --signal: #ed4245;
+  --signal-deep: #b9343a;
+  --signal-glow: #ff6a6d;
+  --vu: #e0a33c;
+
+  --ink: #ede8e0;
+  --ink-soft: #b9b1a5;
+  --ink-muted: #8a8277;
+
+  --sl-color-accent-low: #2a0f11;
   --sl-color-accent: #ed4245;
-  --sl-color-accent-high: #f9a2a4;
+  --sl-color-accent-high: #ff7a7d;
 
-  --sl-color-black: #12100f;
-  --sl-color-gray-1: #1c1918;
-  --sl-color-gray-2: #262220;
-  --sl-color-gray-3: #38322f;
-  --sl-color-gray-4: #57504c;
-  --sl-color-gray-5: #7c736e;
-  --sl-color-gray-6: #b4aba5;
-  --sl-color-white: #f5f1ef;
+  --sl-color-black: #100e0c;
+  --sl-color-gray-1: #14120f;
+  --sl-color-gray-2: #1c1a16;
+  --sl-color-gray-3: #2f2b24;
+  --sl-color-gray-4: #4a4339;
+  --sl-color-gray-5: #6f675b;
+  --sl-color-gray-6: #b9b1a5;
+  --sl-color-white: #ede8e0;
 
-  --sl-color-text: var(--sl-color-gray-6);
-  --sl-color-text-accent: var(--sl-color-accent);
-  --sl-color-text-high: var(--sl-color-white);
+  --sl-color-text: #b9b1a5;
+  --sl-color-text-accent: #ff6a6d;
+  --sl-color-text-high: #ede8e0;
 
-  --sl-font: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
-  --sl-font-mono: "Space Mono", ui-monospace, monospace;
+  --sl-color-black: #100e0c;
+  --sl-color-gray-1: #14120f;
+  --sl-color-gray-2: #1c1a16;
+  --sl-color-gray-3: #2f2b24;
+  --sl-color-gray-4: #4a4339;
+  --sl-color-gray-5: #6f675b;
+  --sl-color-gray-6: #b9b1a5;
+  --sl-color-white: #ede8e0;
+
+  --sl-color-text: #b9b1a5;
+  --sl-color-text-accent: #ff6a6d;
+  --sl-color-text-high: #ede8e0;
+
+  --sl-radius: 0.25rem;
+  --sl-border-radius: 0.25rem;
+  --sl-radius-small: 0.25rem;
+
+  --sl-sidebar-width: 16.5rem;
+  --sl-content-width: 50rem;
+  --sl-line-height: 1.7;
 
   --sl-text-h1-weight: 700;
-  --sl-text-h1-size: 2.6rem;
+  --sl-text-h1-size: clamp(2.1rem, 1.3rem + 2.6vw, 3rem);
   --sl-text-h2-weight: 600;
+  --sl-text-h2-size: 1.5rem;
   --sl-text-h3-weight: 600;
+  --sl-text-h4-weight: 600;
 
-  --sl-radius: 0.5rem;
-  --sl-border-radius: 0.5rem;
-
-  --sl-sidebar-width: 17rem;
+  --sl-nav-bg: #100e0c;
+  --sl-sidebar-bg: #100e0c;
+  --sl-color-bg-sidebar: #100e0c;
+  --sl-color-bg-nav: #100e0c;
+  --sl-search-bg: #1c1a16;
 }
 
-/* A bit of air in the header, and a gradient on the wordmark. */
-.sl-mark {
-  border-radius: 0.5rem;
+:root[data-theme="light"] {
+  --panel: #faf8f4;
+  --panel-raised: #ffffff;
+  --panel-inset: #f2eee7;
+  --line: #e2ddd3;
+  --line-strong: #c4bcae;
+
+  --signal: #d62f35;
+  --signal-deep: #a82227;
+  --signal-glow: #c0272d;
+  --vu: #9a6b12;
+
+  --ink: #17150f;
+  --ink-soft: #4a453c;
+  --ink-muted: #6f685c;
+
+  --sl-color-accent-low: #fbe6e6;
+  --sl-color-accent: #d62f35;
+  --sl-color-accent-high: #a82227;
+
+  --sl-color-black: #faf8f4;
+  --sl-color-gray-1: #f4f1ea;
+  --sl-color-gray-2: #eae5db;
+  --sl-color-gray-3: #6f685c;
+  --sl-color-gray-4: #575047;
+  --sl-color-gray-5: #3f3a32;
+  --sl-color-gray-6: #4a453c;
+  --sl-color-white: #17150f;
+
+  --sl-color-text: #4a453c;
+  --sl-color-text-accent: #a82227;
+  --sl-color-text-high: #17150f;
+
+  --sl-nav-bg: #ffffff;
+  --sl-sidebar-bg: #fdfcfa;
+  --sl-color-bg-sidebar: #fdfcfa;
+  --sl-color-bg-nav: #ffffff;
+  --sl-search-bg: #ffffff;
+}
+
+/* ── The frame ───────────────────────────────────────────────────────────── */
+
+body {
+  background:
+    radial-gradient(120rem 60rem at 50% -20rem, color-mix(in oklab, var(--signal) 7%, transparent), transparent 70%),
+    var(--panel);
+  color: var(--ink-soft);
+  font-feature-settings: "ss01", "ss02";
+}
+
+/* The header is the top strip of the panel: a hairline, and a highlight. */
+.sl-header {
+  background: color-mix(in oklab, var(--panel) 88%, transparent);
+  backdrop-filter: blur(14px) saturate(1.4);
+  border-bottom: 1px solid var(--line);
+  box-shadow: inset 0 1px 0 color-mix(in oklab, var(--ink) 6%, transparent);
+}
+
+.sl-sidebar {
+  background: color-mix(in oklab, var(--sl-sidebar-bg) 92%, transparent);
+  border-right: 1px solid var(--line);
 }
 
 .site-title {
   font-weight: 700;
-  letter-spacing: -0.02em;
-  background: linear-gradient(120deg, #ff8a8c, #ed4245 60%, #b8336b);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  letter-spacing: -0.03em;
+  color: var(--ink);
 }
 
-/* The hero of the landing page. */
-.hero {
-  padding-block: 3.5rem 2.5rem;
+.sl-mark {
+  border-radius: 0.35rem;
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--signal) 35%, transparent);
 }
 
-.hero .tagline {
-  max-width: 44rem;
-  margin-inline: auto;
-  font-size: 1.1rem;
-  line-height: 1.7;
-  color: var(--sl-color-text-accent);
+/* The sidebar is a channel strip: the groups are separated by a rule. */
+.sidebar-content {
+  padding-block: 1rem 3rem;
+}
+
+.sidebar-group {
+  --sl-sidebar-gap: 0.45rem;
+}
+
+.sidebar-group + .sidebar-group {
+  border-top: 1px solid var(--line);
+  margin-top: 1.1rem;
+  padding-top: 1.1rem;
+}
+
+.sidebar-group-label {
+  font-family: var(--sl-font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+  color: var(--ink-muted);
+}
+
+/*
+ * Starlight styles the sidebar links with a scoped class and a `:where()`, so
+ * the selector has a specificity of 0,1,0. The rules below are more specific,
+ * so the order of the stylesheets does not matter.
+ */
+.sidebar-content a {
+  border-radius: 0.25rem;
+  color: var(--ink-soft);
+  padding-inline: 0.6rem;
+  text-decoration: none;
+}
+
+.sidebar-content a:hover,
+.sidebar-content a:focus-visible {
+  background: color-mix(in oklab, var(--signal) 12%, transparent);
+  color: var(--ink);
+}
+
+.sidebar-content a[aria-current="page"] {
+  background: color-mix(in oklab, var(--signal) 16%, transparent);
+  box-shadow: inset 2px 0 0 var(--signal);
+  color: var(--ink);
+}
+
+.sidebar-content .group-label {
+  color: var(--ink-muted);
+  font-family: var(--sl-font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+}
+
+/* The theme selector of the header. */
+.sl-header select {
+  color: var(--ink-soft);
+  opacity: 0.9;
+}
+
+.sl-header select:hover {
+  color: var(--ink);
+  opacity: 1;
+}
+
+/* The social icons of the header. */
+.social-links a {
+  color: var(--signal);
+  opacity: 0.85;
+}
+
+.social-links a:hover {
+  opacity: 1;
+}
+
+/* The search field of the header. */
+.sl-header .sl-search-field-input,
+.sl-search-input {
+  color: var(--ink);
+}
+
+/* The table of contents of the page. */
+.right-sidebar-panel a {
+  color: var(--ink-muted);
+}
+
+.right-sidebar-panel a:hover {
+  color: var(--ink);
+}
+
+.right-sidebar-panel h2 {
+  color: var(--ink);
+}
+
+/* ── The prose ──────────────────────────────────────────────────────────── */
+
+.sl-markdown-content {
+  color: var(--ink-soft);
+}
+
+.sl-markdown-content h2,
+.sl-markdown-content h3 {
+  color: var(--ink);
+  letter-spacing: -0.015em;
 }
 
 .sl-markdown-content h2 {
-  margin-top: 2.5rem;
-  border-top: 1px solid var(--sl-color-gray-3);
-  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+  padding-top: 2.2rem;
+  margin-top: 2.6rem;
 }
 
 .sl-markdown-content h2:first-child {
   border-top: 0;
   padding-top: 0;
+  margin-top: 0;
 }
 
-/* The cards of the landing page get a subtle lift on hover. */
-.sl-card {
+.sl-markdown-content h3 {
+  margin-top: 2rem;
+}
+
+.sl-markdown-content a:not(.headerlink):not(.sl-button) {
+  color: var(--signal-glow);
+  text-decoration-color: color-mix(in oklab, var(--signal) 45%, transparent);
+  text-underline-offset: 0.2em;
+}
+
+.sl-markdown-content a:not(.headerlink):not(.sl-button):hover {
+  color: var(--signal);
+  text-decoration-color: var(--signal);
+}
+
+.sl-markdown-content strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.sl-markdown-content :not(pre) > code {
+  background: var(--panel-inset);
+  border: 1px solid var(--line);
+  border-radius: 0.2rem;
+  color: var(--ink);
+  font-family: var(--sl-font-mono);
+  font-size: 0.85em;
+  padding: 0.1em 0.35em;
+}
+
+/* The code blocks are the parts of the page that get read the most. */
+.sl-markdown-content pre {
+  background: var(--panel-inset);
+  border: 1px solid var(--line);
+  border-radius: 0.3rem;
+  box-shadow: inset 0 1px 0 color-mix(in oklab, var(--ink) 4%, transparent);
+}
+
+.sl-markdown-content pre code {
+  font-family: var(--sl-font-mono);
+  font-size: 0.82rem;
+  line-height: 1.65;
+}
+
+/* The tables of the API reference hold a lot of members: keep them dense. */
+.sl-markdown-content table {
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  width: 100%;
+}
+
+.sl-markdown-content th {
+  background: var(--panel-raised);
+  border-bottom: 1px solid var(--line-strong);
+  color: var(--ink);
+  font-family: var(--sl-font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+}
+
+.sl-markdown-content td {
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+/* The anchors of the API reference are the members themselves. */
+.sl-markdown-content .headerlink {
+  text-decoration: none;
+}
+
+.sl-markdown-content h2 code,
+.sl-markdown-content h3 code,
+.sl-markdown-content h4 code {
+  background: none;
+  border: 0;
+  color: inherit;
+  font-size: 0.94em;
+  padding: 0;
+}
+
+/* ── The buttons ────────────────────────────────────────────────────────── */
+
+.sl-button {
+  border-radius: 0.25rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
   transition:
-    transform 160ms ease,
-    border-color 160ms ease;
+    background-color 140ms ease,
+    border-color 140ms ease,
+    color 140ms ease;
 }
 
-.sl-card:hover {
-  transform: translateY(-2px);
-  border-color: var(--sl-color-accent);
+.sl-button--primary {
+  background: var(--signal);
+  border-color: var(--signal);
+  color: #fff;
 }
 
-/* The install command, so it stands out of the page. */
-.install-command {
-  position: relative;
-  margin-block: 1.5rem;
-  padding: 1rem 1.25rem;
-  border: 1px solid var(--sl-color-gray-3);
-  border-left: 3px solid var(--sl-color-accent);
-  border-radius: var(--sl-radius);
-  background: var(--sl-color-gray-1);
+.sl-button--primary:hover {
+  background: var(--signal-deep);
+  border-color: var(--signal-deep);
+}
+
+.sl-button--secondary {
+  background: transparent;
+  border-color: var(--line-strong);
+  color: var(--ink);
+}
+
+.sl-button--secondary:hover {
+  background: var(--panel-raised);
+  border-color: var(--signal);
+  color: var(--ink);
+}
+
+.sl-button--minimal {
+  color: var(--ink-soft);
+}
+
+/* ── The landing page ───────────────────────────────────────────────────── */
+
+/*
+ * The splash template of Starlight centers its content in a narrow column.
+ * The landing page wants the whole width: the waveform runs from edge to
+ * edge, and the text stays in a readable column.
+ */
+.landing {
+  margin-inline: calc(50% - 50vw);
+  padding-block: 0 3rem;
+  width: 100vw;
+}
+
+/*
+ * The landing page shares one grid: the hero, the prose and the tables are all
+ * aligned on the same column.
+ */
+.sl-container:has(> .landing) {
+  max-width: none;
+  padding-inline: 0;
+}
+
+.sl-container:has(> .landing) > .sl-markdown-content {
+  max-width: none;
+}
+
+.landing__body {
+  margin-inline: auto;
+  max-width: 68rem;
+  padding-inline: clamp(1.25rem, 4vw, 4rem);
+}
+
+.landing__wave {
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 3.2rem;
+  overflow: hidden;
+}
+
+.landing__inner {
+  margin-inline: auto;
+  max-width: 68rem;
+  padding-inline: clamp(1.25rem, 4vw, 4rem);
+}
+
+/* The waveform: the one memorable element of the site. */
+.waveform {
+  color: var(--signal);
+  display: block;
+  height: clamp(7rem, 15vw, 11rem);
+  width: 100%;
+}
+
+.waveform rect {
+  fill: currentColor;
+}
+
+.waveform__axis {
+  stroke: var(--line-strong);
+  stroke-width: 0.08;
+}
+
+.landing__headline {
+  color: var(--ink);
+  font-size: clamp(2.5rem, 1.1rem + 5vw, 4.4rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  margin: 0;
+  max-width: 18ch;
+  text-wrap: balance;
+}
+
+.landing__tagline {
+  color: var(--ink-soft);
+  font-size: clamp(1.05rem, 0.98rem + 0.4vw, 1.25rem);
+  line-height: 1.55;
+  margin: 1.1rem 0 0;
+  max-width: 46ch;
+  text-wrap: pretty;
+}
+
+.landing__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 2.2rem;
+}
+
+.landing__actions .sl-button {
+  font-size: 0.95rem;
+  padding: 0.55rem 1.05rem;
+}
+
+/* The install command is the first thing a developer wants to copy. */
+.install {
+  align-items: baseline;
+  background: var(--panel-inset);
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--signal);
+  border-radius: 0.3rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  margin-top: 2.4rem;
+  max-width: 44rem;
+  padding: 0.85rem 1.1rem;
+}
+
+.install__manager {
+  color: var(--ink-muted);
+  font-family: var(--sl-font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  min-width: 3.2rem;
+}
+
+.install__command {
+  background: none;
+  border: 0;
+  color: var(--ink);
   font-family: var(--sl-font-mono);
   font-size: 0.9rem;
-  overflow-x: auto;
-}
-
-.install-command code {
-  background: none;
+  margin: 0;
   padding: 0;
-  font-size: inherit;
 }
 
-/* The tables of the API reference are dense, they hold a lot of members. */
-.sl-markdown-content table {
-  font-size: 0.9rem;
+.install__command::before {
+  color: var(--signal);
+  content: "$ ";
 }
 
-.sl-markdown-content table th {
-  background: var(--sl-color-gray-2);
+/* The technical facts of the library, in the voice of a device. */
+.specs {
+  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  margin: 3.6rem 0 0;
 }
 
-/* A little more room around the code blocks of the API reference. */
-.sl-markdown-content pre {
-  border-radius: var(--sl-radius);
+.specs__item {
+  border-bottom: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+  margin: 0;
+  padding: 0.9rem 1.2rem 0.9rem 0;
+}
+
+.specs__value {
+  color: var(--ink);
+  display: block;
+  font-family: var(--sl-font-mono);
+  font-size: 1.3rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.specs__label {
+  color: var(--ink-muted);
+  display: block;
+  font-size: 0.78rem;
+  margin: 0.2rem 0 0;
+}
+
+/* The features are a ruled specification, not a grid of cards. */
+.ruled {
+  border-top: 1px solid var(--line);
+  margin-top: 1rem;
+}
+
+.ruled__row {
+  align-items: baseline;
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  gap: 0 1.5rem;
+  grid-template-columns: 2.5rem 14rem 1fr;
+  padding: 1.05rem 0;
+}
+
+.ruled__index {
+  color: var(--signal);
+  font-family: var(--sl-font-mono);
+  font-size: 0.8rem;
+}
+
+.ruled__name {
+  color: var(--ink);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.ruled__detail {
+  color: var(--ink-soft);
+  font-size: 0.93rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 50rem) {
+  .ruled__row {
+    grid-template-columns: 2rem 1fr;
+  }
+
+  .ruled__detail {
+    grid-column: 2;
+  }
+}
+
+/* ── The callouts ───────────────────────────────────────────────────────── */
+
+.sl-markdown-content .starlight-aside {
+  border-radius: 0.3rem;
+  background: var(--panel-raised);
+  border: 1px solid var(--line);
+}
+
+.sl-markdown-content .starlight-aside__content {
+  font-size: 0.93rem;
+}
+
+.sl-markdown-content .starlight-aside--note {
+  border-left: 2px solid var(--vu);
+}
+
+.sl-markdown-content .starlight-aside--tip {
+  border-left: 2px solid var(--signal);
+}
+
+.sl-markdown-content .starlight-aside--caution {
+  border-left: 2px solid var(--signal-glow);
+}
+
+.sl-markdown-content .starlight-aside--danger {
+  border-left: 2px solid var(--signal-deep);
+}
+
+.starlight-aside__title {
+  font-family: var(--sl-font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+}
+
+/* ── The search ─────────────────────────────────────────────────────────── */
+
+.pagefind-ui__search-field {
+  background: var(--panel-raised);
+  border: 1px solid var(--line-strong);
+  border-radius: 0.25rem;
+}
+
+.pagefind-ui__search-field:focus-visible {
+  border-color: var(--signal);
+  outline: 2px solid color-mix(in oklab, var(--signal) 40%, transparent);
+  outline-offset: 1px;
+}
+
+/* ── The footer ─────────────────────────────────────────────────────────── */
+
+.sl-footer {
+  border-top: 1px solid var(--line);
+  color: var(--ink-muted);
+  font-size: 0.85rem;
+}
+
+/* ── The motion ─────────────────────────────────────────────────────────── */
+
+/* One reveal, on the load of the landing page. Nothing else moves. */
+@keyframes waveform-in {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.waveform {
+  animation: waveform-in 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .waveform {
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── The focus ──────────────────────────────────────────────────────────── */
+
+:where(a, button, input, summary):focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 2px;
+  border-radius: 0.15rem;
 }

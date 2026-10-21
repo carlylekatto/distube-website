@@ -1,0 +1,48 @@
+---
+import Waveform from "./Waveform.astro";
+
+const { tagline } = Astro.locals.starlightRoute.entry.data.hero ?? {};
+---
+
+<div class="landing">
+  <div class="landing__wave">
+    <Waveform />
+  </div>
+
+  <div class="landing__inner">
+    <h1 class="landing__headline">Play music in Discord.</h1>
+    {tagline && <p class="landing__tagline">{tagline}</p>}
+
+    <div class="landing__actions">
+      <a class="sl-button sl-button--primary" href="/getting-started/quick-start/">Get started</a>
+      <a class="sl-button sl-button--secondary" href="/getting-started/installation/">Installation</a>
+      <a class="sl-button sl-button--minimal" href="/api/">API reference</a>
+    </div>
+
+    <div class="install">
+      <span class="install__manager">npm</span>
+      <code class="install__command">install distube @discordjs/voice @discordjs/opus</code>
+    </div>
+  </div>
+
+  <div class="landing__inner">
+    <dl class="specs">
+      <div class="specs__item">
+        <dt class="specs__value">6.0.0</dt>
+        <dd class="specs__label">the current version</dd>
+      </div>
+      <div class="specs__item">
+        <dt class="specs__value">15</dt>
+        <dd class="specs__label">built-in audio filters</dd>
+      </div>
+      <div class="specs__item">
+        <dt class="specs__value">13</dt>
+        <dd class="specs__label">events to listen to</dd>
+      </div>
+      <div class="specs__item">
+        <dt class="specs__value">48 kHz</dt>
+        <dd class="specs__label">the sample rate of the audio</dd>
+      </div>
+    </dl>
+  </div>
+</div>

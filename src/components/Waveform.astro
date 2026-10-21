@@ -1,0 +1,56 @@
+---
+/**
+ * The waveform of the hero.
+ *
+ * It is generated from a fixed seed, so it is the same on every build. The
+ * shape follows a real audio waveform: a silent centre, symmetric peaks, and
+ * quiet passages that fade out.
+ */
+const SEED = 0x2f6e21;
+
+const random = (() => {
+  let state = SEED;
+  return () => {
+    state = (state * 1664525 + 1013904223) % 4294967296;
+    return state / 4294967296;
+  };
+})();
+
+const BARS = 320;
+const HEIGHT = 200;
+const CENTER = HEIGHT / 2;
+const PITCH = 100 / BARS;
+
+const bars = Array.from({ length: BARS }, (_, index) => {
+  // A slow envelope, so the waveform has quiet and loud passages.
+  const envelope = 0.2 + 0.8 * Math.abs(Math.sin(index / 24)) * (0.5 + 0.5 * Math.sin(index / 7.3 + 1.2));
+  const body = Math.pow(random(), 1.9);
+  const amplitude = Math.max(1.5, envelope * body * (CENTER - 10));
+  return {
+    x: index * PITCH,
+    amplitude,
+    opacity: 0.24 + Math.min(0.76, (amplitude / (CENTER - 10)) * 0.9),
+  };
+});
+---
+
+<svg
+  class="waveform"
+  viewBox={`0 0 100 ${HEIGHT}`}
+  preserveAspectRatio="none"
+  role="img"
+  aria-label="A waveform"
+>
+  <line x1="0" y1={CENTER} x2="100" y2={CENTER} class="waveform__axis" />
+  {
+    bars.map((bar) => (
+      <rect
+        x={bar.x}
+        y={CENTER - bar.amplitude}
+        width={PITCH * 0.55}
+        height={bar.amplitude * 2}
+        opacity={bar.opacity}
+      />
+    ))
+  }
+</svg>

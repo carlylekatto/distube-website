@@ -3,52 +3,64 @@ title: DisTube
 description: A powerful Discord.js module for simplifying music commands and effortless playback of various sources with integrated audio filters.
 template: splash
 hero:
-  tagline: Play music in Discord with a few lines. Multi-source playback, live audio filters, autoplay and a plugin system — all typed.
-  actions:
-    - text: Get started
-      link: /getting-started/quick-start/
-      icon: right-arrow
-      variant: primary
-    - text: Installation
-      link: /getting-started/installation/
-      icon: download
-      variant: minimal
-    - text: API reference
-      link: /api/
-      icon: open-book
-      variant: minimal
+  tagline: Multi-source playback, live audio filters, autoplay and a plugin system — all typed.
 ---
 
-import { Card, CardGrid, Tabs, TabItem } from "@astrojs/starlight/components";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
 
-## Install
+<div class="landing__body">
 
-<div class="install-command">npm install distube @discordjs/voice @discordjs/opus</div>
+## What it does
 
-<div class="install-command">bun add distube @discordjs/voice @discordjs/opus</div>
-
-## What you get
-
-<CardGrid stagger>
-  <Card title="Multi-source playback" icon="music">
-    YouTube, Spotify, SoundCloud, Tidal, Deezer, Bandcamp and 700+ more sites, through plugins you choose.
-  </Card>
-  <Card title="Live audio filters" icon="puzzle">
-    Fifteen built-in filters — nightcore, 3D, karaoke, bass boost — applied while the track plays.
-  </Card>
-  <Card title="Autoplay" icon="refresh">
-    The related tracks of the source keep the queue going, without any extra work.
-  </Card>
-  <Card title="Typed from the ground up" icon="seti:typescript">
-    Every option, event and error is typed. The IDE tells you what is possible.
-  </Card>
-  <Card title="A real plugin system" icon="puzzle-piece">
-    Write your own source in a few lines, or compose the official ones.
-  </Card>
-  <Card title="It does not crash" icon="shield-check">
-    Errors are events, not crashes. A missing listener never takes the bot down.
-  </Card>
-</CardGrid>
+<div class="ruled">
+  <div class="ruled__row">
+    <span class="ruled__index">01</span>
+    <span class="ruled__name">Multi-source playback</span>
+    <span class="ruled__detail">
+      YouTube, Spotify, SoundCloud, Tidal, Deezer, Bandcamp and 700+ more sites, through plugins you
+      choose. DisTube ships no source of its own.
+    </span>
+  </div>
+  <div class="ruled__row">
+    <span class="ruled__index">02</span>
+    <span class="ruled__name">Live audio filters</span>
+    <span class="ruled__detail">
+      Fifteen filters — nightcore, 3D, karaoke, bass boost — applied while the track plays, on a
+      per-queue basis.
+    </span>
+  </div>
+  <div class="ruled__row">
+    <span class="ruled__index">03</span>
+    <span class="ruled__name">Autoplay</span>
+    <span class="ruled__detail">
+      The related tracks of the source keep the queue going, without any extra work.
+    </span>
+  </div>
+  <div class="ruled__row">
+    <span class="ruled__index">04</span>
+    <span class="ruled__name">A real plugin system</span>
+    <span class="ruled__detail">
+      Write your own source in a few lines. It can search, it can play, and it can hand the audio of
+      a track that it cannot play itself to another plugin.
+    </span>
+  </div>
+  <div class="ruled__row">
+    <span class="ruled__index">05</span>
+    <span class="ruled__name">Typed from the ground up</span>
+    <span class="ruled__detail">
+      Every option, event and error is typed. The editor tells you what is possible, and the
+      reference tells you what it does.
+    </span>
+  </div>
+  <div class="ruled__row">
+    <span class="ruled__index">06</span>
+    <span class="ruled__name">It does not crash</span>
+    <span class="ruled__detail">
+      Errors are events, not crashes. A missing listener never takes the bot down, and a track that
+      stops producing audio is skipped instead of playing silence forever.
+    </span>
+  </div>
+</div>
 
 ## A whole bot in twenty lines
 
@@ -87,9 +99,6 @@ client.login(process.env.DISCORD_TOKEN);
 ```
 
 ## Pick your sources
-
-DisTube ships **no** music source: you add the plugins you want. The official ones cover the usual
-grounds, and your own plugin can cover the rest.
 
 <Tabs syncKey="sources">
   <TabItem label="YouTube">
@@ -134,8 +143,11 @@ grounds, and your own plugin can cover the rest.
   </TabItem>
 </Tabs>
 
-<div class="sl-markdown-content" style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2rem;">
-  <a class="sl-button sl-button--primary" href="/getting-started/quick-start/">Read the quick start</a>
-  <a class="sl-button sl-button--secondary" href="https://github.com/skick1234/DisTube">Star on GitHub</a>
-  <a class="sl-button sl-button--secondary" href="https://discord.gg/feaDd9h">Join the Discord</a>
+## Where to go next
+
+- [Installation](/getting-started/installation/) — the requirements, and the two system tools to install.
+- [Quick start](/getting-started/quick-start/) — the commands, the events and the queue.
+- [Plugin system](/guide/plugins/) — how a source is written, and how to find one.
+- [Upgrading](/guide/upgrade/) — what changed in v6, and how to migrate.
+
 </div>

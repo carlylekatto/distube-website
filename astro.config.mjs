@@ -25,8 +25,11 @@ export default defineConfig({
       },
       favicon: "/favicon.svg",
       customCss: ["./src/styles/custom.css"],
+      components: {
+        Hero: "./src/components/Hero.astro",
+      },
       social: [
-        { icon: "github", label: "GitHub", href: "https://github.com/skick1234/DisTube" },
+        { icon: "github", label: "GitHub", href: "https://github.com/carlylekatto/DisTube" },
         { icon: "discord", label: "Discord", href: "https://discord.gg/feaDd9h" },
         { icon: "npm", label: "npm", href: "https://www.npmjs.com/package/distube" },
         { icon: "youtube", label: "YouTube", href: "https://www.youtube.com/@DisTube" },
@@ -85,6 +88,10 @@ export default defineConfig({
             gitRevision: "",
             hideBreadcrumbs: true,
             useCodeBlocks: true,
+            // The sources are not published: the path of the checkout would
+            // leak the layout of the build.
+            disableSources: true,
+            sourceLinkTemplate: "",
           },
         }),
       ],

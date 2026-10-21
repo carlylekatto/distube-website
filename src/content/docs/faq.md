@@ -122,7 +122,7 @@ read and to type. Use `distube.getQueue(guildId).method()` instead. See
 
 ### How do I report a bug?
 
-Open an issue on [GitHub](https://github.com/skick1234/DisTube/issues), with:
+Open an issue on [GitHub](https://github.com/carlylekatto/DisTube/issues), with:
 
 - the version of DisTube, of discord.js and of Node.js
 - the plugin you use, and its version
