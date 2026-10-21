@@ -1,0 +1,166 @@
+---
+title: Quick start
+description: Build a music bot with DisTube, from the client to the commands.
+---
+
+This page builds a small but complete music bot: it plays a track, shows what is playing, and
+handles the queue.
+
+## 1. The client
+
+```js
+import { Client, GatewayIntentBits } from "discord.js";
+import { DisTube, Events } from "distube";
+
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildVoiceStates,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+  ],
+});
+
+const distube = new DisTube(client, {
+  emitNewSongOnly: true,
+});
+```
+
+`emitNewSongOnly` avoids emitting `PLAY_SONG` twice when the same track is looped.
+
+## 2. Handle the events
+
+```js
+distube.on(Events.PLAY_SONG, (queue, song) => {
+  queue.textChannel?.send(`Playing **${song.name}** — ${song.formattedDuration}`);
+});
+
+distube.on(Events.ADD_SONG, (queue, song) => {
+  queue.textChannel?.send(`Added **${song.name}** to the queue.`);
+});
+
+distube.on(Events.ERROR, (error, queue) => {
+  console.error(error);
+  queue?.textChannel?.send(`Something went wrong: ${error.message}`);
+});
+```
+
+:::tip
+The `error` event never crashes the process. If nothing listens to it, DisTube logs a warning
+instead. See [the reliability guarantees](/guide/events/#errors-never-crash-the-bot).
+:::
+
+## 3. The commands
+
+Use the queue of the guild, never the shortcut methods of the client:
+
+```js
+client.on("messageCreate", async (message) => {
+  if (!message.content.startsWith("!play")) return;
+  if (!message.member?.voice?.channel) {
+    await message.reply("You have to be in a voice channel.");
+    return;
+  }
+
+  const query = message.content.slice(6).trim();
+  if (!query) return;
+
+  try {
+    await distube.play(message.member.voice.channel, query, {
+      message,
+      member: message.member,
+      textChannel: message.channel,
+    });
+  } catch (error) {
+    await message.reply(`Could not play that: ${error.message}`);
+  }
+});
+```
+
+## 4. Control the queue
+
+```js
+client.on("messageCreate", async (message) => {
+  const [command, ...args] = message.content.slice(1).split(" ");
+  const queue = distube.getQueue(message.guildId);
+
+  switch (command) {
+    case "skip":
+      if (!queue) return;
+      await queue.skip();
+      break;
+
+    case "stop":
+      if (!queue) return;
+      await queue.stop();
+      break;
+
+    case "pause":
+      if (!queue) return;
+      await queue.pause();
+      break;
+
+    case "resume":
+      if (!queue) return;
+      await queue.resume();
+      break;
+
+    case "volume":
+      if (!queue) return;
+      queue.setVolume(Number(args[0]));
+      break;
+
+    case "shuffle":
+      if (!queue) return;
+      await queue.shuffle();
+      break;
+
+    case "repeat":
+      if (!queue) return;
+      // undefined toggles: disabled -> song -> queue -> disabled
+      queue.setRepeatMode();
+      break;
+
+    case "queue":
+      if (!queue) return;
+      await message.reply(queue.songs.map((s, i) => `${i + 1}. ${s.name}`).join("\n"));
+      break;
+
+    case "nowplaying":
+    case "np":
+      if (!queue) return;
+      await message.reply(`**${queue.songs[0]?.name}** — ${queue.formattedCurrentTime}`);
+      break;
+  }
+});
+```
+
+:::caution
+In v6, the shortcut methods of the client (`distube.pause(guild)`, `distube.skip(guild)`, ...) are
+**gone**. Use the queue: `distube.getQueue(guildId).pause()`. See [upgrading](/guide/upgrade/).
+:::
+
+## 5. Search many results
+
+`distube.search()` returns a `SearchResult` with real `Song` instances, so a result can be played
+without resolving it a second time.
+
+```js
+const result = await distube.search("never gonna give you up", { limit: 5 });
+
+for (const song of result.songs) {
+  console.log(song.name, "—", song.uploader.name);
+}
+```
+
+Route a query to a single source with the `source` option:
+
+```js
+await distube.search("faded", { source: "spotify" });
+```
+
+## Next
+
+- [Handling events](/guide/events/) — every event of the library
+- [Plugin system](/guide/plugins/) — add the music sources
+- [Audio filters](/guide/filters/) — change how the audio sounds

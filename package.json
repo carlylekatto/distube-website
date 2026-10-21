@@ -1,0 +1,24 @@
+{
+  "name": "distube-website",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "The documentation website of DisTube, the Discord music library for discord.js.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "^0.42.6",
+    "astro": "^7.4.1",
+    "starlight-typedoc": "^0.23.1"
+  },
+  "devDependencies": {
+    "discord.js": "^14.27.0",
+    "typedoc": "^0.28.20",
+    "typedoc-plugin-markdown": "^4.14.1"
+  }
+}

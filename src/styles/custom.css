@@ -1,0 +1,124 @@
+/*
+ * The theme of the website.
+ *
+ * DisTube is red, so the accent color follows the brand. The typography uses
+ * Space Grotesk for the headings and Space Mono for the code, which gives the
+ * site the same identity as the API reference of the library.
+ */
+
+:root {
+  /* The brand color of DisTube, and its shades. */
+  --sl-color-accent-low: #33161a;
+  --sl-color-accent: #ed4245;
+  --sl-color-accent-high: #f9a2a4;
+
+  --sl-color-black: #12100f;
+  --sl-color-gray-1: #1c1918;
+  --sl-color-gray-2: #262220;
+  --sl-color-gray-3: #38322f;
+  --sl-color-gray-4: #57504c;
+  --sl-color-gray-5: #7c736e;
+  --sl-color-gray-6: #b4aba5;
+  --sl-color-white: #f5f1ef;
+
+  --sl-color-text: var(--sl-color-gray-6);
+  --sl-color-text-accent: var(--sl-color-accent);
+  --sl-color-text-high: var(--sl-color-white);
+
+  --sl-font: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --sl-font-mono: "Space Mono", ui-monospace, monospace;
+
+  --sl-text-h1-weight: 700;
+  --sl-text-h1-size: 2.6rem;
+  --sl-text-h2-weight: 600;
+  --sl-text-h3-weight: 600;
+
+  --sl-radius: 0.5rem;
+  --sl-border-radius: 0.5rem;
+
+  --sl-sidebar-width: 17rem;
+}
+
+/* A bit of air in the header, and a gradient on the wordmark. */
+.sl-mark {
+  border-radius: 0.5rem;
+}
+
+.site-title {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: linear-gradient(120deg, #ff8a8c, #ed4245 60%, #b8336b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* The hero of the landing page. */
+.hero {
+  padding-block: 3.5rem 2.5rem;
+}
+
+.hero .tagline {
+  max-width: 44rem;
+  margin-inline: auto;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--sl-color-text-accent);
+}
+
+.sl-markdown-content h2 {
+  margin-top: 2.5rem;
+  border-top: 1px solid var(--sl-color-gray-3);
+  padding-top: 2rem;
+}
+
+.sl-markdown-content h2:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+/* The cards of the landing page get a subtle lift on hover. */
+.sl-card {
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease;
+}
+
+.sl-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--sl-color-accent);
+}
+
+/* The install command, so it stands out of the page. */
+.install-command {
+  position: relative;
+  margin-block: 1.5rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--sl-color-gray-3);
+  border-left: 3px solid var(--sl-color-accent);
+  border-radius: var(--sl-radius);
+  background: var(--sl-color-gray-1);
+  font-family: var(--sl-font-mono);
+  font-size: 0.9rem;
+  overflow-x: auto;
+}
+
+.install-command code {
+  background: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* The tables of the API reference are dense, they hold a lot of members. */
+.sl-markdown-content table {
+  font-size: 0.9rem;
+}
+
+.sl-markdown-content table th {
+  background: var(--sl-color-gray-2);
+}
+
+/* A little more room around the code blocks of the API reference. */
+.sl-markdown-content pre {
+  border-radius: var(--sl-radius);
+}
