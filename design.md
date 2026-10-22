@@ -129,6 +129,32 @@ written in the CSS with the contrast of each step on the canvas.
 - A hover changes a colour or a border, never the layout.
 - A press of a button deepens the emerald. It never bounces, and it never shifts the box.
 
+## The kind of a member
+
+TypeDoc writes the members of a class under a heading that tells the kind of the member, but the
+heading of the member itself does not. The build adds a marker before it, so a reader who lands on
+a member knows what it is at a glance.
+
+The markers are geometric, monochrome, and they take the colour of the text. A shape tells the kind:
+
+| Kind | Shape |
+| --- | --- |
+| Method | A filled circle |
+| Accessor | Two triangles facing each other, for the reading and the writing |
+| Property | A filled square |
+| Event | A filled triangle, pointing up |
+| Constructor | A filled cross |
+| Enumeration member | A filled triangle, pointing right |
+| Function | A filled diamond |
+| Variable | A filled bar |
+| Type alias | An open diamond |
+| Interface | An open circle |
+| Class | An open square |
+| Enumeration | An open triangle |
+
+The marker sits right before the name of the member, with no space between: a space would become a
+dash in the anchor of the heading, and every link to a member would break.
+
 ## Per-page allowances
 - Marketing pages may use the spectrum analyzer and the mockups of the product.
 - Content pages stay typographic: hairlines, dark code containers, and a focus on the text.

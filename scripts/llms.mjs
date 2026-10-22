@@ -47,6 +47,14 @@ const urlOf = (file) => {
 };
 
 /**
+ * Remove the marker of the kind of a member.
+ *
+ * The marker is an image for the readers of the site, and it means nothing to
+ * an assistant reading the text.
+ */
+const stripKindMarkers = (text) => text.replace(/<span class="api-kind[^>]*><\/span>\s*/gu, "");
+
+/**
  * Read the frontmatter and the body of a page.
  */
 async function readPage(file) {
@@ -56,7 +64,7 @@ async function readPage(file) {
   const title = /^title:\s*(.+)$/mu.exec(frontmatter)?.[1]?.trim() ?? "";
   const description = /^description:\s*(.+)$/mu.exec(frontmatter)?.[1]?.trim() ?? "";
   const body = content.slice(match ? match[0].length : 0);
-  return { title, description, body };
+  return { title, description, body: stripKindMarkers(body) };
 }
 
 /**
@@ -86,7 +94,7 @@ async function readApiPages() {
         file: `api/${prefix}${slug}.md`,
         title,
         description: `The reference of ${title}.`,
-        body: content,
+        body: stripKindMarkers(content),
         url: `${SITE}/api/${prefix}${slug === "index" ? "" : `${slug}/`}`,
       });
     }

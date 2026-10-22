@@ -1,6 +1,8 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import starlightTypeDoc, { typeDocSidebarGroup } from "starlight-typedoc";
+import { fileURLToPath } from "node:url";
+import { markApiKinds } from "./scripts/api-icons.mjs";
 
 // The DisTube sources are checked out next to the website, in the "source"
 // directory. The path is configurable so the CI and the local development use
@@ -102,5 +104,16 @@ export default defineConfig({
         typeDocSidebarGroup,
       ],
     }),
+    {
+      // The Starlight TypeDoc plugin writes the API reference in the config
+      // setup hook. The marker of the kind of a member is added after that,
+      // when the configuration of the project is done.
+      name: "api-kind-icons",
+      hooks: {
+        "astro:config:done": async ({ config, logger }) => {
+          await markApiKinds(fileURLToPath(config.root), logger);
+        },
+      },
+    },
   ],
 });
