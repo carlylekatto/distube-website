@@ -48,8 +48,7 @@ export default defineConfig({
       social: [
         { icon: "github", label: "GitHub", href: "https://github.com/carlylekatto/DisTube" },
         { icon: "discord", label: "Discord", href: "https://discord.gg/feaDd9h" },
-        { icon: "npm", label: "npm", href: "https://www.npmjs.com/package/distube" },
-        { icon: "youtube", label: "YouTube", href: "https://www.youtube.com/@DisTube" },
+        { icon: "npm", label: "npm", href: "https://www.npmjs.com/package/@kattowo/distube" },
       ],
       editLink: {
         baseUrl: "https://github.com/carlylekatto/distube-website/edit/main/",
