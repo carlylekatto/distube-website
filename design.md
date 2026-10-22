@@ -115,8 +115,23 @@ written in the CSS with the contrast of each step on the canvas.
 - **Spectrum analyzer** (`src/components/Waveform.astro`): A canvas of 44 emerald bars that lives inside
   the mockup. It reacts to the pointer, and it flattens when the reader asked for less motion.
 - **Tabbed install terminal**: `npm` / `pnpm` / `yarn` / `bun` over one command, with a copy control.
-- **Wordmark**: the header carries the word `DisTube` as text. There is no logo image in the header;
-  the mark of the site is the favicon.
+- **Wordmark**: the header carries the logo and the word `DisTube` as text.
+
+## The logo
+
+The logo of the library is a white silhouette on a transparent background: a head with a play button
+in it, and the eyes and the mouth are holes. It would be invisible on a light page, so it has a
+version for each theme.
+
+| | |
+| --- | --- |
+| `src/assets/logo-dark.png` | The silhouette, white. The header of the dark theme. |
+| `src/assets/logo-light.png` | The same shape, filled with the ink of the light theme. |
+| `public/favicon.png` | The silhouette on a tile of the accent colour, 128 pixels. |
+
+The logo of the header keeps the colour of the wordmark next to it: near-black in the light theme,
+near-white in the dark one. The accent stays in the favicon, where the shape needs something to sit
+on.
 
 ## Motion
 - Every transition is **140ms ease**. It is the only duration of the system: a hover, a border, a

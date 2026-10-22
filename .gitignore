@@ -25,4 +25,7 @@ public/llms.txt
 public/llms-full.txt
 
 # The screenshots of the design review
-*.png
+review-*.png
+crop-*.png
+shot.png
+*-screenshot.png
