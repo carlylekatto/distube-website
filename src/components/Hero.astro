@@ -34,7 +34,7 @@ const { tagline } = entry.data.hero ?? {
     <div class="landing">
       <div class="landing__hero-grid">
         <!-- Left Column: Headline, CTAs, Package Manager Terminal -->
-        <div class="landing__content">
+        <div class="landing__content" data-hero-enter>
           <h1 class="landing__headline">
             Audio playback for <span class="landing__headline-accent">Discord bots</span>.
           </h1>
@@ -62,7 +62,7 @@ const { tagline } = entry.data.hero ?? {
               <button class="pkg-tab" data-pkg="bun">bun</button>
             </div>
             <div class="terminal-install__body">
-              <code class="terminal-install__cmd" data-pkg-cmd>npm install @kattowo/distube @discordjs/voice @discordjs/opus</code>
+              <code class="terminal-install__cmd" data-pkg-cmd>npm install @kattowo/distube @discordjs/voice @discordjs/opus<span class="terminal-install__cursor" aria-hidden="true"></span></code>
               <button class="terminal-install__copy" data-copy-btn aria-label="Copy command" title="Copy to clipboard">
                 <svg class="icon-copy" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
@@ -77,7 +77,7 @@ const { tagline } = entry.data.hero ?? {
         </div>
 
         <!-- Right Column: Composited Product UI Mockup (12px rounded, 1px hairline, level 2 shadow) -->
-        <div class="landing__mockup-pane">
+        <div class="landing__mockup-pane" data-hero-enter>
           <div class="ui-mockup">
             <!-- Window Chrome -->
             <div class="ui-mockup__chrome">
@@ -87,7 +87,7 @@ const { tagline } = entry.data.hero ?? {
                 <span class="chrome-dot"></span>
               </div>
               <div class="chrome-status">
-                <span class="status-indicator"></span>
+                <span class="status-indicator" data-pulse></span>
                 <span class="status-text">queue.status: playing · 48,000 Hz PCM</span>
               </div>
             </div>
@@ -166,7 +166,12 @@ const { tagline } = entry.data.hero ?? {
         tab.classList.add("is-active");
         const pkg = tab.dataset.pkg || "npm";
         activePkg = pkg;
-        if (cmdEl) cmdEl.textContent = pkgCommands[pkg] || pkgCommands.npm;
+        if (cmdEl) {
+          // The cursor stays at the end of the command.
+          const cursor = cmdEl.querySelector(".terminal-install__cursor");
+          cmdEl.textContent = pkgCommands[pkg] || pkgCommands.npm;
+          if (cursor) cmdEl.appendChild(cursor);
+        }
       });
     });
 

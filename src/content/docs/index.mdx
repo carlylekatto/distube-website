@@ -6,6 +6,8 @@ hero:
   tagline: Multi-source playback, live audio filters, autoplay, and plugin extractors with complete TypeScript types.
 ---
 
+import { base } from "../../utils/base";
+
 <div class="landing__body">
 
 <section class="landing-section">
@@ -152,32 +154,32 @@ const distube = new DisTube(client, {
   </div>
 
   <div class="nav-cards-grid">
-    <a class="nav-card" href="/getting-started/installation/">
+    <a class="nav-card" href={`${base}getting-started/installation/`}>
       <div class="nav-card__meta">Setup</div>
       <h3 class="nav-card__title">Installation</h3>
       <p class="nav-card__desc">Requirements, FFmpeg installation, and Discord voice encryption libraries.</p>
     </a>
-    <a class="nav-card" href="/getting-started/quick-start/">
+    <a class="nav-card" href={`${base}getting-started/quick-start/`}>
       <div class="nav-card__meta">Guide</div>
       <h3 class="nav-card__title">Quick start</h3>
       <p class="nav-card__desc">Basic playback commands, voice state checks, and queue listeners.</p>
     </a>
-    <a class="nav-card" href="/guide/plugins/">
+    <a class="nav-card" href={`${base}guide/plugins/`}>
       <div class="nav-card__meta">Architecture</div>
       <h3 class="nav-card__title">Plugin system</h3>
       <p class="nav-card__desc">How sources are parsed, stream resolution, and custom extractors.</p>
     </a>
-    <a class="nav-card" href="/guide/filters/">
+    <a class="nav-card" href={`${base}guide/filters/`}>
       <div class="nav-card__meta">DSP</div>
       <h3 class="nav-card__title">Audio filters</h3>
       <p class="nav-card__desc">Applying audio filters, custom FFmpeg arguments, and volume control.</p>
     </a>
-    <a class="nav-card" href="/guide/upgrade/">
+    <a class="nav-card" href={`${base}guide/upgrade/`}>
       <div class="nav-card__meta">Migration</div>
       <h3 class="nav-card__title">Upgrade guide</h3>
       <p class="nav-card__desc">Migration instructions and changes when moving from v5 to v6.</p>
     </a>
-    <a class="nav-card" href="/api/">
+    <a class="nav-card" href={`${base}api/`}>
       <div class="nav-card__meta">Reference</div>
       <h3 class="nav-card__title">API reference</h3>
       <p class="nav-card__desc">Methods, options, classes, and event signatures for DisTube.</p>

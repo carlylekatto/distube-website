@@ -42,7 +42,7 @@ distube.getPlugin("my-source");
 ```
 
 Look for a plugin in the place where you publish your own work: the registry of your package
-manager, and the topics of the community. The [DisTube Discord server](https://discord.gg/feaDd9h)
+manager, and the topics of the community. The [DisTube Discord server](https://discord.gg/jKkWadnQhT)
 is the other place to ask.
 
 ## The bots

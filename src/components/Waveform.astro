@@ -1,7 +1,9 @@
 ---
 /**
  * DisTube Audio Spectrum Analyzer
- * Engineered for clarity: clean emerald frequency levels inside canvas-night chrome.
+ *
+ * The bars of a spectrum analyser of a studio device: a quiet layer of
+ * levels, a slow scan that crosses them, and a bump under the pointer.
  */
 interface Props {
   height?: number;
@@ -28,22 +30,20 @@ const { height = 80, class: className = "", interactive = true } = Astro.props;
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
 
-      let animationId: number;
+      const barCount = 44;
       let width = 0;
       let height = 0;
-      const barCount = 44;
-      const bars: { height: number; target: number; phase: number }[] = [];
 
-      for (let i = 0; i < barCount; i++) {
-        bars.push({
-          height: 10 + Math.random() * 20,
-          target: 15 + Math.random() * 32,
-          phase: Math.random() * Math.PI * 2,
-        });
-      }
+      // Every bar has its own rhythm, so the levels never look like a single
+      // wave repeated.
+      const bars = Array.from({ length: barCount }, () => ({
+        level: 12 + Math.random() * 18,
+        phase: Math.random() * Math.PI * 2,
+        speed: 0.6 + Math.random() * 0.9,
+        depth: 0.4 + Math.random() * 0.8,
+      }));
 
       function resize() {
-        if (!canvas) return;
         const rect = container.getBoundingClientRect();
         width = rect.width;
         height = rect.height || 80;
@@ -54,6 +54,7 @@ const { height = 80, class: className = "", interactive = true } = Astro.props;
       }
 
       let time = 0;
+      let scan = 0;
       let hoveredIndex = -1;
 
       if (container.dataset.interactive === "true") {
@@ -62,11 +63,7 @@ const { height = 80, class: className = "", interactive = true } = Astro.props;
           const paddingX = Math.max(12, Math.min(20, width * 0.04));
           const availWidth = width - paddingX * 2;
           const x = e.clientX - rect.left - paddingX;
-          if (x >= 0 && x <= availWidth) {
-            hoveredIndex = Math.floor((x / availWidth) * barCount);
-          } else {
-            hoveredIndex = -1;
-          }
+          hoveredIndex = x >= 0 && x <= availWidth ? Math.floor((x / availWidth) * barCount) : -1;
         });
 
         container.addEventListener("mouseleave", () => {
@@ -85,62 +82,76 @@ const { height = 80, class: className = "", interactive = true } = Astro.props;
         const centerY = height / 2;
         const maxAmplitude = height - 16;
 
-        time += 0.035;
+        time += 0.016;
+        // The scan crosses the bars, and lifts them as it goes.
+        scan = (scan + 0.0045) % 1;
 
-        // Signature Supabase Emerald
-        const primaryEmerald = "rgba(62, 207, 142, ";
-        const softEmerald = "rgba(74, 222, 128, ";
+        const primary = "rgba(62, 207, 142, ";
+        const soft = "rgba(74, 222, 128, ";
+
+        ctx.shadowColor = "rgba(62, 207, 142, 0.45)";
+        ctx.shadowBlur = 10;
 
         for (let i = 0; i < barCount; i++) {
           const bar = bars[i];
-          const wave1 = Math.sin(time * 2.2 + i * 0.24) * Math.cos(time * 1.2 + i * 0.14);
-          const wave2 = Math.sin(time * 3.4 + bar.phase) * 0.5;
-          const envelope = Math.sin((i / (barCount - 1)) * Math.PI);
-          
-          let target = (12 + (Math.abs(wave1) * 36 + wave2 * 10)) * envelope;
-          
+          const position = i / (barCount - 1);
+
+          // Three layers at different speeds: the levels of a track, not a
+          // sine wave.
+          const slow = Math.sin(time * bar.speed + bar.phase);
+          const quick = Math.sin(time * bar.speed * 2.7 + bar.phase * 1.9) * 0.4;
+          const drift = Math.sin(time * 0.31 + position * 3.1) * 0.5;
+
+          // The envelope keeps the ends of the spectrum lower.
+          const envelope = 0.35 + Math.sin(position * Math.PI) * 0.65;
+
+          let target = (14 + (slow * 16 + quick * 12 + drift * 8 + 18) * bar.depth) * envelope;
+
+          // The scan.
+          const distance = Math.abs(position - scan);
+          const near = distance < 0.16 ? (1 - distance / 0.16) * 26 : 0;
+          target += near;
+
+          // The pointer.
           if (hoveredIndex !== -1) {
-            const dist = Math.abs(i - hoveredIndex);
-            if (dist < 6) {
-              target += (6 - dist) * 8;
-            }
+            const d = Math.abs(i - hoveredIndex);
+            if (d < 7) target += (7 - d) * 7;
           }
 
-          if (prefersReducedMotion) {
-            target = 20 * envelope;
-          }
+          if (prefersReducedMotion) target = 20 * envelope;
 
-          bar.height += (target - bar.height) * 0.12;
-          const currentH = Math.max(6, Math.min(maxAmplitude, bar.height));
+          bar.level += (target - bar.level) * 0.12;
+          const level = Math.max(6, Math.min(maxAmplitude, bar.level));
           const x = paddingX + i * (barWidth + gap);
-          const y = centerY - currentH / 2;
+          const y = centerY - level / 2;
           const radius = Math.min(barWidth / 2, 3);
 
-          // Vertical gradient: soft emerald top/bottom, vibrant emerald core
-          const grad = ctx.createLinearGradient(0, y, 0, y + currentH);
-          grad.addColorStop(0, `${softEmerald}0.95)`);
-          grad.addColorStop(0.5, `${primaryEmerald}0.85)`);
-          grad.addColorStop(1, `${softEmerald}0.95)`);
+          const gradient = ctx.createLinearGradient(0, y, 0, y + level);
+          gradient.addColorStop(0, `${soft}0.95)`);
+          gradient.addColorStop(0.5, `${primary}0.9)`);
+          gradient.addColorStop(1, `${soft}0.95)`);
 
-          ctx.fillStyle = grad;
+          ctx.fillStyle = gradient;
           ctx.beginPath();
-          ctx.roundRect(x, y, barWidth, currentH, radius);
+          ctx.roundRect(x, y, barWidth, level, radius);
           ctx.fill();
         }
 
+        ctx.shadowBlur = 0;
+
         if (!prefersReducedMotion) {
-          animationId = requestAnimationFrame(draw);
+          requestAnimationFrame(draw);
         }
       }
 
       resize();
       draw();
 
-      const ro = new ResizeObserver(() => {
+      const observer = new ResizeObserver(() => {
         resize();
         if (prefersReducedMotion) draw();
       });
-      ro.observe(container);
+      observer.observe(container);
     });
   }
 

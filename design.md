@@ -136,8 +136,15 @@ on.
 ## Motion
 - Every transition is **140ms ease**. It is the only duration of the system: a hover, a border, a
   colour, a copy control. Nothing animates longer than it takes to read as a reaction.
-- One orchestrated entrance on the load of the hero. No repetitive scroll fade.
-- Reduced motion: the spectrum analyzer keeps its bars but flattens them, so nothing moves.
+- The hero comes in **once**, in an order: the headline, the tagline, the buttons, the terminal, the
+  device. Each one waits 40ms more than the one before it, and rises 14 pixels while it fades in.
+- The spectrum analyser never stops: three layers of levels at different speeds, a slow scan that
+  crosses the bars, and a bump under the pointer.
+- The lamp of the device breathes, and the terminal has a cursor that blinks.
+- The device lifts by 3 pixels when the reader comes near it.
+- Nothing moves when the reader scrolls.
+- Reduced motion: the spectrum analyser keeps its bars but flattens them, the hero is there from
+  the start, the lamp and the cursor hold still.
 
 ## Microinteractions
 - Silent success: the icon of a copy control changes in place. No toast, no celebration.

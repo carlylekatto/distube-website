@@ -5,6 +5,8 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { markApiKinds } from "./scripts/api-icons.mjs";
+import { satteri } from "@astrojs/markdown-satteri";
+import { baseLinks } from "./scripts/base-links.mjs";
 
 // The DisTube sources are checked out next to the website, in the "source"
 // directory. The path is configurable so the CI and the local development use
@@ -27,6 +29,12 @@ export default defineConfig({
   site,
   base,
   trailingSlash: "always",
+  // The site lives in a sub path: the links of the markdown carry the base.
+  markdown: {
+    processor: satteri({
+      mdastPlugins: [baseLinks({ base })],
+    }),
+  },
   integrations: [
     starlight({
       title: "DisTube",
@@ -47,7 +55,7 @@ export default defineConfig({
       },
       social: [
         { icon: "github", label: "GitHub", href: "https://github.com/carlylekatto/DisTube" },
-        { icon: "discord", label: "Discord", href: "https://discord.gg/feaDd9h" },
+        { icon: "discord", label: "Discord", href: "https://discord.gg/jKkWadnQhT" },
         { icon: "npm", label: "npm", href: "https://www.npmjs.com/package/@kattowo/distube" },
       ],
       editLink: {

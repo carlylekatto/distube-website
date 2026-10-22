@@ -1545,3 +1545,107 @@ header .site-title img {
   height: 1.4rem;
   width: auto;
 }
+/* ── The Motion of the Hero ────────────────────────────────────────────────── */
+
+/*
+ * The hero comes in once, in an order: the words, then the buttons, then the
+ * terminal, then the device. Nothing moves again when the reader scrolls.
+ */
+@keyframes hero-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.landing__content[data-hero-enter] > .landing__headline {
+  animation: hero-enter 600ms ease both 40ms;
+}
+
+.landing__content[data-hero-enter] > .landing__tagline {
+  animation: hero-enter 600ms ease both 110ms;
+}
+
+.landing__content[data-hero-enter] > .landing__actions {
+  animation: hero-enter 600ms ease both 180ms;
+}
+
+.landing__content[data-hero-enter] > .terminal-install {
+  animation: hero-enter 600ms ease both 250ms;
+}
+
+.landing__mockup-pane[data-hero-enter] {
+  animation: hero-enter 700ms ease both 120ms;
+}
+
+/* The device lifts a little when the reader comes near it. */
+.ui-mockup {
+  transition: transform 140ms ease, box-shadow 140ms ease;
+}
+
+.ui-mockup:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.1);
+}
+
+/* The lamp of the device breathes. */
+@keyframes status-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(62, 207, 142, 0.45);
+  }
+
+  50% {
+    opacity: 0.7;
+    box-shadow: 0 0 0 4px rgba(62, 207, 142, 0);
+  }
+}
+
+.status-indicator[data-pulse] {
+  animation: status-pulse 2.4s ease-in-out infinite;
+}
+
+/* The cursor of the terminal. */
+@keyframes cursor-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.terminal-install__cursor {
+  display: inline-block;
+  width: 0.5em;
+  height: 1.05em;
+  margin-left: 0.2em;
+  vertical-align: text-bottom;
+  background-color: var(--colors-primary);
+  animation: cursor-blink 1.1s steps(1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing__content[data-hero-enter] > *,
+  .landing__mockup-pane[data-hero-enter] {
+    animation: none;
+  }
+
+  .status-indicator[data-pulse],
+  .terminal-install__cursor {
+    animation: none;
+  }
+
+  .ui-mockup:hover {
+    transform: none;
+  }
+}

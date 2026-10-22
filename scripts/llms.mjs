@@ -148,7 +148,7 @@ index.push(
   "## Optional",
   "",
   "- [The repository of the library](https://github.com/carlylekatto/DisTube)",
-  "- [The Discord server](https://discord.gg/feaDd9h)",
+  "- [The Discord server](https://discord.gg/jKkWadnQhT)",
   "",
 );
 

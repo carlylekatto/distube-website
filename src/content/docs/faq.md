@@ -134,4 +134,4 @@ Open an issue on [GitHub](https://github.com/carlylekatto/DisTube/issues), with:
 
 ### Where do I ask a question?
 
-On the [Discord server](https://discord.gg/feaDd9h).
+On the [Discord server](https://discord.gg/jKkWadnQhT).
