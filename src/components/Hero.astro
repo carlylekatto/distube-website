@@ -138,28 +138,9 @@ const { tagline } = entry.data.hero ?? {
         </div>
       </div>
 
-      <!-- What the library needs to run -->
-      <div class="landing__specs">
-        <dl class="requirements">
-          <div class="requirements__item">
-            <dt class="requirements__label">Node.js</dt>
-            <dd class="requirements__value">22.12 or later</dd>
-          </div>
-          <div class="requirements__item">
-            <dt class="requirements__label">discord.js</dt>
-            <dd class="requirements__value">14</dd>
-          </div>
-          <div class="requirements__item">
-            <dt class="requirements__label">FFmpeg</dt>
-            <dd class="requirements__value">on the PATH</dd>
-          </div>
-        </dl>
-      </div>
     </div>
   )
-}
-
-<script>
+}<script>
   function setupTerminal() {
     const pkgCommands: Record<string, string> = {
       npm: "npm install @kattowo/distube @discordjs/voice @discordjs/opus",

@@ -261,7 +261,8 @@ button.search-button:hover .sl-icon {
   width: 100%;
   max-width: 1280px;
   margin-inline: auto;
-  padding-block: 3.5rem 5rem;
+  padding-block: 3.5rem 3rem;
+  border-bottom: 1px solid var(--colors-hairline);
 }
 
 .sl-container:has(> .landing) {
@@ -765,46 +766,6 @@ button.search-button:hover .sl-icon {
   background-color: transparent;
 }
 
-/* ── Requirements Strip ────────────────────────────────────────────────────── */
-
-.landing__specs {
-  padding-inline: clamp(1.5rem, 4vw, 3rem);
-}
-
-.requirements {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0;
-  border-top: 1px solid var(--colors-hairline);
-  border-bottom: 1px solid var(--colors-hairline);
-}
-
-.requirements__item {
-  display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
-  margin-right: 1.5rem;
-  padding: 0.85rem 1.5rem 0.85rem 0;
-  border-right: 1px solid var(--colors-hairline);
-}
-
-.requirements__item:last-child {
-  margin-right: 0;
-  padding-right: 0;
-  border-right: none;
-}
-
-.requirements__label {
-  font-size: 13px;
-  color: var(--colors-ink-mute);
-}
-
-.requirements__value {
-  margin: 0;
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--colors-ink);
-}
 
 /* ── Content Sections (index.mdx) ────────────────────────────────────────── */
 
@@ -816,6 +777,10 @@ button.search-button:hover .sl-icon {
 
 .landing-section {
   margin-top: 5rem;
+}
+
+.landing__body > .landing-section:first-child {
+  margin-top: 3.5rem;
 }
 
 .section-header {
