@@ -1872,6 +1872,11 @@ header .site-title img {
   }
 
   /* The words of the documentation. */
+  .content-panel h1#_top {
+    font-size: 30px;
+    letter-spacing: -0.8px;
+  }
+
   .sl-markdown-content h1,
   .sl-markdown-content .sl-heading-wrapper.level-h1 {
     font-size: 30px;
@@ -1959,6 +1964,10 @@ header .site-title img {
 
   .sl-markdown-content h1,
   .sl-markdown-content .sl-heading-wrapper.level-h1 {
+    font-size: 27px;
+  }
+
+  .content-panel h1#_top {
     font-size: 27px;
   }
 
