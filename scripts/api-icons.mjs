@@ -3,52 +3,45 @@
  *
  * TypeDoc writes the members of a class under a heading that tells the kind
  * of the member: Properties, Accessors, Methods... The heading of the member
- * itself does not, so a reader who lands on a member, or who reads the table
- * of contents, has no way to tell a method from a property.
+ * itself does not, so a reader who lands on a member has no way to tell a
+ * method from a property.
  *
- * This adds a marker before the heading of every member. The marker carries
- * the kind in its class, and the stylesheet of the site draws it.
+ * This adds a badge before the heading of every member, and before the
+ * entries of the lists of the classes, the interfaces and the enumerations.
+ * The badge carries the kind in its class, and the stylesheet of the site
+ * draws it.
  */
 import { readdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 
 /**
- * The sections of TypeDoc that hold members, and the kind of the member they
- * hold.
+ * The sections of TypeDoc that hold members, the kind of the member they
+ * hold, and the label a reader of a screen gets.
  */
 const KINDS = {
-  Constructors: "constructor",
-  Properties: "property",
-  Accessors: "accessor",
-  Methods: "method",
-  Events: "event",
-  Functions: "function",
-  Variables: "variable",
-  "Enumeration Members": "enum-member",
-  "Type Aliases": "type",
-  Interfaces: "interface",
-  Classes: "class",
-  Enumerations: "enum",
+  Constructors: { kind: "constructor", label: "Constructor" },
+  Properties: { kind: "property", label: "Property" },
+  Accessors: { kind: "accessor", label: "Accessor" },
+  Methods: { kind: "method", label: "Method" },
+  Events: { kind: "event", label: "Event" },
+  Functions: { kind: "function", label: "Function" },
+  Variables: { kind: "variable", label: "Variable" },
+  "Enumeration Members": { kind: "enum-member", label: "Enumeration member" },
+  "Type Aliases": { kind: "type", label: "Type alias" },
+  Interfaces: { kind: "interface", label: "Interface" },
+  Classes: { kind: "class", label: "Class" },
+  Enumerations: { kind: "enum", label: "Enumeration" },
 };
 
 /**
- * The label of a kind, for the readers of a screen.
+ * The sections that hold a list of entries instead of members.
  */
-const LABELS = {
-  constructor: "Constructor",
-  property: "Property",
-  accessor: "Accessor",
-  method: "Method",
-  event: "Event",
-  function: "Function",
-  variable: "Variable",
-  "enum-member": "Enumeration member",
-  type: "Type alias",
-  interface: "Interface",
-  class: "Class",
-  enum: "Enumeration",
-};
+const LISTS = new Set(["Classes", "Interfaces", "Enumerations", "Functions", "Variables", "Type Aliases"]);
+
+/**
+ * The badge of a kind.
+ */
+const badge = (kind, label) => `<span class="api-kind api-kind--${kind}" role="img" aria-label="${label}"></span>`;
 
 /**
  * Walk the markdown files of the API reference.
@@ -73,36 +66,50 @@ async function walk(dir) {
 }
 
 /**
- * Add the markers to one file.
+ * Add the badges to one file.
  */
 function mark(content) {
   const lines = content.split("\n");
-  let kind = null;
+  let section = null;
   let count = 0;
 
   const marked = lines.map((line) => {
-    // A section of level 2 holds the members, or something else: the
-    // Parameters of a function, for instance.
+    // A section of level 2 holds the members, or a list of entries, or
+    // something else: the Parameters of a function, for instance.
     if (line.startsWith("## ") && !line.startsWith("### ")) {
-      kind = KINDS[line.slice(3).trim()] ?? null;
+      section = line.slice(3).trim();
       return line;
     }
+
+    const kind = KINDS[section];
+    if (!kind) return line;
+
     // The member itself is a heading of level 3.
-    if (!kind || !line.startsWith("### ")) return line;
-    const name = line.slice(4).trim();
-    if (name.startsWith("<span")) return line;
-    count += 1;
-    // There is no space between the marker and the name: the space would
-    // become a dash in the anchor of the heading, and every link to a member
-    // of the reference would break.
-    return `### <span class="api-kind api-kind--${kind}" role="img" aria-label="${LABELS[kind]}"></span>${name}`;
+    if (line.startsWith("### ")) {
+      const name = line.slice(4).trim();
+      if (name.startsWith("<span")) return line;
+      count += 1;
+      // There is no space between the badge and the name: a space would become
+      // a dash in the anchor of the heading, and every link to a member would
+      // break.
+      return `### ${badge(kind.kind, kind.label)}${name}`;
+    }
+
+    // The entries of a list of classes, of interfaces or of enumerations.
+    if (LISTS.has(section) && /^- \[/.test(line)) {
+      if (line.includes("api-kind")) return line;
+      count += 1;
+      return line.replace(/^- /, `- ${badge(kind.kind, kind.label)}`);
+    }
+
+    return line;
   });
 
   return { content: marked.join("\n"), count };
 }
 
 /**
- * Add the markers to the whole API reference.
+ * Add the badges to the whole API reference.
  */
 export async function markApiKinds(root, logger) {
   const apiDir = path.join(root, "src", "content", "docs", "api");
@@ -124,5 +131,3 @@ export async function markApiKinds(root, logger) {
 
   logger.info(`Marked ${total} members of the API reference.`);
 }
-
-export const apiIconsDir = path.dirname(fileURLToPath(import.meta.url));

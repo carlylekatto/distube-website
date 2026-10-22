@@ -1503,71 +1503,94 @@ starlight-tabs [role="tab"][aria-selected="true"] {
 :root[data-theme='dark'] .nav-card__meta {
   color: var(--colors-primary) !important;
 }
-
 /* ── The Kind of a Member of the API Reference ─────────────────────────────── */
 
 /*
  * TypeDoc writes the members of a class under a heading that tells the kind
- * of the member. The heading of the member itself does not, so the marker
- * added by the build tells it.
+ * of the member. The heading of the member itself does not, so the badge added
+ * by the build tells it.
+ *
+ * The badge is a letter in a small box. The letter comes from a variable, so
+ * the text of the badge stays empty and the anchor of the heading does not
+ * change.
  */
 .api-kind {
-  display: inline-block;
-  width: 0.85em;
-  height: 0.85em;
-  margin-right: 0.4em;
-  vertical-align: -0.02em;
-  background-color: currentColor;
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: contain;
-  opacity: 0.5;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 1.4em;
+  height: 1.4em;
+  margin-right: 0.45em;
+  padding-inline: 0.25em;
+  border: 1px solid var(--colors-hairline-strong);
+  border-radius: 0.25em;
+  background-color: var(--colors-canvas-soft);
+  color: var(--colors-ink-mute);
+  font-family: var(--font-mono);
+  font-size: 0.66em;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  vertical-align: 0.1em;
+  user-select: none;
+}
+
+.api-kind::before {
+  content: var(--api-kind-label);
 }
 
 .api-kind--method {
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='4.25'/%3E%3C/svg%3E");
-}
-
-.api-kind--accessor {
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M2.6 5.4 6.4 8l-3.8 2.6zM13.4 5.4 9.6 8l3.8 2.6z'/%3E%3C/svg%3E");
+  --api-kind-label: 'M';
 }
 
 .api-kind--property {
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='3.6' y='3.6' width='8.8' height='8.8' rx='1.8'/%3E%3C/svg%3E");
+  --api-kind-label: 'P';
 }
 
-.api-kind--event {
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 3.1 13.1 12.2H2.9z'/%3E%3C/svg%3E");
+.api-kind--accessor {
+  --api-kind-label: 'A';
 }
 
 .api-kind--constructor {
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M6.5 2.6h3v3.9h3.9v3h-3.9v3.9h-3V9.5H2.6v-3h3.9z'/%3E%3C/svg%3E");
+  --api-kind-label: 'C';
+}
+
+.api-kind--event {
+  --api-kind-label: 'E';
 }
 
 .api-kind--function {
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 2.4 13.6 8 8 13.6 2.4 8z'/%3E%3C/svg%3E");
+  --api-kind-label: 'F';
 }
 
 .api-kind--variable {
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='2.4' y='6.4' width='11.2' height='3.2' rx='1.6'/%3E%3C/svg%3E");
+  --api-kind-label: 'V';
 }
 
 .api-kind--enum-member {
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5.4 3.3 12.7 8l-7.3 4.7z'/%3E%3C/svg%3E");
+  --api-kind-label: 'EM';
 }
 
 .api-kind--type {
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 2.9 13.1 8 8 13.1 2.9 8z' fill='none' stroke='black' stroke-width='1.6'/%3E%3C/svg%3E");
+  --api-kind-label: 'TA';
 }
 
 .api-kind--interface {
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='4.4' fill='none' stroke='black' stroke-width='1.6'/%3E%3C/svg%3E");
+  --api-kind-label: 'I';
 }
 
 .api-kind--class {
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='3.6' y='3.6' width='8.8' height='8.8' rx='1.8' fill='none' stroke='black' stroke-width='1.6'/%3E%3C/svg%3E");
+  --api-kind-label: 'CL';
 }
 
 .api-kind--enum {
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 2.9 13.1 8 8 13.1 2.9 8z' fill='none' stroke='black' stroke-width='1.6'/%3E%3C/svg%3E");
+  --api-kind-label: 'EN';
+}
+
+/* The badge of a member in the table of contents sits next to the name. */
+.right-sidebar .api-kind {
+  margin-right: 0.35em;
+  vertical-align: 0.05em;
 }
