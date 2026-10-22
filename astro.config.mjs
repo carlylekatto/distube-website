@@ -19,10 +19,6 @@ export default defineConfig({
       title: "DisTube",
       description:
         "A powerful Discord.js module for simplifying music commands and effortless playback of various sources with integrated audio filters.",
-      logo: {
-        src: "./src/assets/logo.svg",
-        replacesTitle: false,
-      },
       favicon: "/favicon.svg",
       customCss: ["./src/styles/custom.css"],
       components: {
