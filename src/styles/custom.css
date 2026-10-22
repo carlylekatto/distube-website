@@ -174,7 +174,8 @@ starlight-theme-select .icon {
 
 /* Search bar & search button in header */
 .sl-search-input,
-.pagefind-ui__search-field {
+#starlight__search input,
+.pagefind-ui__search-input {
   background-color: var(--colors-canvas-soft) !important;
   border: 1px solid var(--colors-hairline) !important;
   border-radius: var(--rounded-sm) !important;
@@ -183,7 +184,8 @@ starlight-theme-select .icon {
 }
 
 .sl-search-input::placeholder,
-.pagefind-ui__search-field::placeholder {
+#starlight__search input::placeholder,
+.pagefind-ui__search-input::placeholder {
   color: var(--colors-ink-mute) !important;
   opacity: 1 !important;
 }
@@ -206,7 +208,8 @@ button.search-button:hover .sl-icon {
 }
 
 .sl-search-input:focus-visible,
-.pagefind-ui__search-field:focus-visible {
+#starlight__search input:focus-visible,
+.pagefind-ui__search-input:focus-visible {
   border-color: var(--colors-primary) !important;
   outline: 2px solid rgba(62, 207, 142, 0.3) !important;
 }
@@ -1540,6 +1543,20 @@ starlight-tabs [role="tab"][aria-selected="true"] {
   margin-right: 0.35em;
   vertical-align: 0.05em;
 }
+
+/*
+ * The list of a narrow screen is a column of rows, and Starlight spreads the
+ * row apart. The name takes the room that is left, so the badge stays at the
+ * left of it instead of the name drifting to the right edge.
+ */
+.right-sidebar .isMobile a > span:not(.api-kind) {
+  flex: 1;
+}
+
+.right-sidebar .isMobile .api-kind {
+  margin-right: 0;
+}
+
 /* The logo of the header sits at the height of the wordmark next to it. */
 header .site-title img {
   height: 1.4rem;
@@ -1647,5 +1664,305 @@ header .site-title img {
 
   .ui-mockup:hover {
     transform: none;
+  }
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+
+/*
+ * The phone comes first in the numbers below. Most of the readers arrive from
+ * a chat app, in a bus, with one hand, so the page keeps a single column, the
+ * text keeps a measure of about forty characters, and every control is tall
+ * enough to be hit with a thumb.
+ */
+
+/*
+ * A grid item holds the width of its content unless it is told otherwise. The
+ * command of the terminal is a long line, and without this line the whole
+ * landing page scrolls sideways.
+ */
+.landing__content,
+.landing__mockup-pane,
+.terminal-install__body,
+.terminal-install__cmd {
+  min-width: 0;
+}
+
+.terminal-install__cmd {
+  flex: 1;
+}
+
+/* The two panes of the landing, and the sections under them. */
+@media (max-width: 768px) {
+  .landing {
+    padding-block: 2.5rem 2rem;
+  }
+
+  .landing__hero-grid {
+    padding-inline: 1.25rem;
+    gap: 2.25rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .landing__body {
+    padding-inline: 1.25rem;
+  }
+
+  .landing-section {
+    margin-top: 3.5rem;
+  }
+
+  .landing__body > .landing-section:first-child {
+    margin-top: 2.5rem;
+  }
+
+  .section-title {
+    font-size: 26px;
+    letter-spacing: -0.5px;
+  }
+
+  /* A table that is wider than the phone scrolls on its own instead of
+     pushing the page. */
+  .sl-markdown-content table {
+    display: block;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+  }
+}
+
+/*
+ * The tablet: the hero is a single column, so the two objects of it keep the
+ * width of a card. Spread over the whole screen the device looks empty and
+ * the command of the terminal loses its end.
+ */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .landing__mockup-pane,
+  .terminal-install {
+    max-width: 560px;
+  }
+}
+
+/* The phone: one column, a smaller voice, and controls for a thumb. */
+@media (max-width: 640px) {
+  .landing__headline {
+    font-size: 2rem;
+    line-height: 1.14;
+    letter-spacing: -0.7px;
+  }
+
+  .landing__tagline {
+    font-size: 16px;
+    margin-top: 0.9rem;
+  }
+
+  .landing__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+
+  /* The first action takes the row, and the two others share the next one. */
+  .landing__actions > a:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .landing__actions > a {
+    width: 100%;
+    min-height: 46px;
+    font-size: 15px;
+    padding-inline: 0.75rem;
+  }
+
+  /* The command wraps. A hidden half of the line is worse than two lines. */
+  .terminal-install {
+    margin-top: 1.5rem;
+    max-width: none;
+  }
+
+  .terminal-install__body {
+    padding: 10px 10px 10px 12px;
+    gap: 8px;
+  }
+
+  .terminal-install__cmd {
+    font-size: 12px;
+    line-height: 1.5;
+    padding-top: 3px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  .pkg-tab {
+    padding: 6px 10px;
+  }
+
+  .terminal-install__copy {
+    width: 34px;
+    height: 34px;
+    margin-top: -2px;
+  }
+
+  /* The device of the hero. */
+  .ui-mockup__chrome {
+    padding: 8px 12px;
+  }
+
+  .ui-mockup__panel {
+    padding: 14px;
+  }
+
+  .stream-row {
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .stream-badge {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .status-text {
+    font-size: 10px;
+  }
+
+  .stream-title {
+    font-size: 13px;
+  }
+
+  .stream-details {
+    font-size: 11px;
+  }
+
+  .stream-spectrum {
+    height: 72px;
+    margin-bottom: 10px;
+  }
+
+  .stream-footer {
+    gap: 6px;
+  }
+
+  .ui-mockup__queue-list {
+    padding: 4px 10px;
+  }
+
+  .queue-item {
+    gap: 8px;
+    padding: 7px 4px;
+    font-size: 12px;
+  }
+
+  .queue-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* One card per row, without a minimum that is wider than the screen. */
+  .features-grid,
+  .nav-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .card-feature-light,
+  .nav-card {
+    padding: 1.25rem;
+  }
+
+  /* The words of the documentation. */
+  .sl-markdown-content h1,
+  .sl-markdown-content .sl-heading-wrapper.level-h1 {
+    font-size: 30px;
+    letter-spacing: -0.8px;
+  }
+
+  .sl-markdown-content h2,
+  .sl-markdown-content .sl-heading-wrapper.level-h2 {
+    font-size: 23px;
+    letter-spacing: -0.4px;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+  }
+
+  .sl-markdown-content h3,
+  .sl-markdown-content .sl-heading-wrapper.level-h3 {
+    font-size: 18px;
+  }
+
+  .sl-markdown-content th,
+  .sl-markdown-content td {
+    padding: 8px 10px;
+    font-size: 12.5px;
+  }
+
+  .sl-markdown-content pre {
+    font-size: 12.5px;
+  }
+
+  /* A code block that scrolls sideways must not move the page with it. */
+  .sl-markdown-content pre,
+  .expressive-code pre {
+    overscroll-behavior-x: contain;
+  }
+
+  /* Sixteen pixels keep the phone from zooming into the field. */
+  #starlight__search input,
+  .pagefind-ui__search-input {
+    font-size: 16px !important;
+  }
+
+  .landing-404 {
+    padding: 3.5rem 1.25rem;
+  }
+
+  .landing-404__title {
+    font-size: 28px;
+    letter-spacing: -0.5px;
+  }
+
+  .landing-404__actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .landing-404__actions > a {
+    width: 100%;
+    min-height: 46px;
+  }
+}
+
+/*
+ * A finger cannot hover. The copy button of a code block waits for a hover on
+ * a wide screen, so on a touch screen it is always there, and it is tall
+ * enough to be hit with a thumb.
+ */
+@media (hover: none) {
+  .expressive-code .copy button {
+    width: 34px !important;
+    height: 34px !important;
+    opacity: 0.8 !important;
+  }
+}
+
+/* A narrow phone, still one column, a little smaller again. */
+@media (max-width: 380px) {
+  .landing__headline {
+    font-size: 1.75rem;
+    letter-spacing: -0.5px;
+  }
+
+  .section-title {
+    font-size: 23px;
+  }
+
+  .sl-markdown-content h1,
+  .sl-markdown-content .sl-heading-wrapper.level-h1 {
+    font-size: 27px;
+  }
+
+  .terminal-install__cmd {
+    font-size: 11.5px;
   }
 }

@@ -50,8 +50,10 @@ export default defineConfig({
       customCss: ["./src/styles/custom.css"],
       components: {
         Hero: "./src/components/Hero.astro",
-        // The table of contents carries the badge of the kind of a member.
+        // The table of contents carries the badge of the kind of a member, on
+        // a wide screen and on a narrow one.
         TableOfContents: "./src/components/TableOfContents.astro",
+        MobileTableOfContents: "./src/components/MobileTableOfContents.astro",
       },
       social: [
         { icon: "github", label: "GitHub", href: "https://github.com/carlylekatto/DisTube" },

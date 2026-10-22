@@ -151,31 +151,53 @@ on.
 - A hover changes a colour or a border, never the layout.
 - A press of a button deepens the emerald. It never bounces, and it never shifts the box.
 
+## Responsive
+
+- The phone is the first case, not the last. Pages are read on a phone in a bus, with one hand, so
+  nothing needs a sideways swipe of the page to be read.
+- One breakpoint is not enough. The hero is a single column below 1024px, the sections drop to one
+  card per row below 640px, and a narrow phone (380px and under) drops the headline one step.
+- A grid item holds the width of its longest child unless it is told otherwise. The command of the
+  terminal is long, so the panes of the hero carry `min-width: 0` and the command wraps instead of
+  hiding its end.
+- Below 640px the first action of the hero takes a row of its own and the two others share the next
+  one. Every control of the hero is 46 pixels tall.
+- A table wider than the screen scrolls inside its own box. The page itself does not scroll sideways
+  at any width from 320px up.
+- On a touch screen the copy control of a code block is always visible, because a finger cannot
+  hover. The search field is 16 pixels, so the browser does not zoom into it.
+- On a tablet the two objects of the hero keep the width of a card instead of spreading over the
+  screen.
+
 ## The kind of a member
 
 TypeDoc writes the members of a class under a heading that tells the kind of the member, but the
 heading of the member itself does not. The build adds a marker before it, so a reader who lands on
 a member knows what it is at a glance.
 
-The markers are geometric, monochrome, and they take the colour of the text. A shape tells the kind:
+The markers are letters in a small box, monochrome, in the colour of the muted text. A letter tells
+the kind:
 
-| Kind | Shape |
+| Kind | Letter |
 | --- | --- |
-| Method | A filled circle |
-| Accessor | Two triangles facing each other, for the reading and the writing |
-| Property | A filled square |
-| Event | A filled triangle, pointing up |
-| Constructor | A filled cross |
-| Enumeration member | A filled triangle, pointing right |
-| Function | A filled diamond |
-| Variable | A filled bar |
-| Type alias | An open diamond |
-| Interface | An open circle |
-| Class | An open square |
-| Enumeration | An open triangle |
+| Method | M |
+| Property | P |
+| Accessor | A |
+| Constructor | C |
+| Event | E |
+| Function | F |
+| Variable | V |
+| Interface | I |
+| Class | CL |
+| Enumeration | EN |
+| Enumeration member | EM |
+| Type alias | TA |
 
 The marker sits right before the name of the member, with no space between: a space would become a
 dash in the anchor of the heading, and every link to a member would break.
+
+The table of contents carries the same marker, on a wide screen and on a narrow one, so the list of
+members of a long page says what each one is before the reader jumps.
 
 ## Per-page allowances
 - Marketing pages may use the spectrum analyzer and the mockups of the product.
