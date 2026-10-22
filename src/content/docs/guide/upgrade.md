@@ -133,7 +133,7 @@ second time.
 ### The errors have their own codes
 
 ```js
-import { PluginError, PluginErrorCode } from "distube";
+import { PluginError, PluginErrorCode } from "@kattowo/distube";
 
 throw new PluginError(PluginErrorCode.NOT_FOUND, "This track does not exist.");
 ```

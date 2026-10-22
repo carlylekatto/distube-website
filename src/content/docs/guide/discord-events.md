@@ -11,7 +11,7 @@ around it: a user who leaves, a bot that is moved, a channel that empties.
 The most common one. Without it, the bot stays alone in a voice channel forever.
 
 ```js
-const { isVoiceChannelEmpty } = require("distube");
+const { isVoiceChannelEmpty } = require("@kattowo/distube");
 
 client.on("voiceStateUpdate", (oldState, newState) => {
   if (!isVoiceChannelEmpty(oldState)) return;

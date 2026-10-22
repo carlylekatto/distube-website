@@ -34,7 +34,7 @@ everything that account can see.
 
 ```js
 import { YouTubePlugin } from "@distube/youtube";
-import { DisTube } from "distube";
+import { DisTube } from "@kattowo/distube";
 
 const distube = new DisTube(client, {
   plugins: [new YouTubePlugin({ cookie: process.env.YOUTUBE_COOKIE })],

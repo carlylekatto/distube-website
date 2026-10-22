@@ -67,7 +67,7 @@ const { tagline } = entry.data.hero ?? {
               <button class="pkg-tab" data-pkg="bun">bun</button>
             </div>
             <div class="terminal-install__body">
-              <code class="terminal-install__cmd" data-pkg-cmd>npm install distube @discordjs/voice @discordjs/opus</code>
+              <code class="terminal-install__cmd" data-pkg-cmd>npm install @kattowo/distube @discordjs/voice @discordjs/opus</code>
               <button class="terminal-install__copy" data-copy-btn aria-label="Copy command" title="Copy to clipboard">
                 <svg class="icon-copy" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
@@ -171,10 +171,10 @@ const { tagline } = entry.data.hero ?? {
 <script>
   function setupTerminal() {
     const pkgCommands: Record<string, string> = {
-      npm: "npm install distube @discordjs/voice @discordjs/opus",
-      pnpm: "pnpm add distube @discordjs/voice @discordjs/opus",
-      yarn: "yarn add distube @discordjs/voice @discordjs/opus",
-      bun: "bun add distube @discordjs/voice @discordjs/opus",
+      npm: "npm install @kattowo/distube @discordjs/voice @discordjs/opus",
+      pnpm: "pnpm add @kattowo/distube @discordjs/voice @discordjs/opus",
+      yarn: "yarn add @kattowo/distube @discordjs/voice @discordjs/opus",
+      bun: "bun add @kattowo/distube @discordjs/voice @discordjs/opus",
     };
 
     const terminal = document.querySelector("[data-pkg-terminal]");

@@ -9,7 +9,7 @@ you actually need.
 ## Using a plugin
 
 ```js
-import { DisTube } from "distube";
+import { DisTube } from "@kattowo/distube";
 import { YouTubePlugin } from "@distube/youtube";
 import { SpotifyPlugin } from "@distube/spotify";
 
@@ -92,7 +92,7 @@ source the user asked for.
 A plugin extends one of the base classes and implements its methods.
 
 ```js
-import { ExtractorPlugin } from "distube";
+import { ExtractorPlugin } from "@kattowo/distube";
 
 class MyPlugin extends ExtractorPlugin {
   async validate(url) {
@@ -177,7 +177,7 @@ const distube = await DisTube.create(client, { plugins: [new MyPlugin()] });
 A plugin raises a `PluginError`, with a code from `PluginErrorCode`:
 
 ```js
-import { PluginError, PluginErrorCode } from "distube";
+import { PluginError, PluginErrorCode } from "@kattowo/distube";
 
 throw new PluginError(PluginErrorCode.UNSUPPORTED_URL, "This link is not a track.");
 ```

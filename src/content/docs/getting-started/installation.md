@@ -20,16 +20,16 @@ order to install them in.
 
 ```bash
 # Bun (recommended)
-bun add distube @discordjs/voice @discordjs/opus
+bun add @kattowo/distube @discordjs/voice @discordjs/opus
 
 # npm
-npm install distube @discordjs/voice @discordjs/opus
+npm install @kattowo/distube @discordjs/voice @discordjs/opus
 
 # pnpm
-pnpm add distube @discordjs/voice @discordjs/opus
+pnpm add @kattowo/distube @discordjs/voice @discordjs/opus
 
 # Yarn
-yarn add distube @discordjs/voice @discordjs/opus
+yarn add @kattowo/distube @discordjs/voice @discordjs/opus
 ```
 
 :::tip
@@ -86,7 +86,7 @@ DisTube needs the `GuildVoiceStates` intent. The `Guilds` intent is required by 
 
 ```js
 import { Client, GatewayIntentBits } from "discord.js";
-import { DisTube } from "distube";
+import { DisTube } from "@kattowo/distube";
 
 const client = new Client({
   intents: [

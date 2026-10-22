@@ -80,7 +80,7 @@ import { Tabs, TabItem } from "@astrojs/starlight/components";
   </div>
 
 ```js
-import { DisTube, Events } from "distube";
+import { DisTube, Events } from "@kattowo/distube";
 import { Client, GatewayIntentBits } from "discord.js";
 
 const client = new Client({
@@ -124,7 +124,7 @@ client.login(process.env.DISCORD_TOKEN);
   <TabItem label="YouTube">
     ```js
     import { YouTubePlugin } from "@distube/youtube";
-    import { DisTube } from "distube";
+    import { DisTube } from "@kattowo/distube";
 
     const distube = new DisTube(client, {
       plugins: [new YouTubePlugin()],
@@ -134,7 +134,7 @@ client.login(process.env.DISCORD_TOKEN);
   <TabItem label="Spotify">
     ```js
     import { SpotifyPlugin } from "@distube/spotify";
-    import { DisTube } from "distube";
+    import { DisTube } from "@kattowo/distube";
 
     const distube = new DisTube(client, {
       plugins: [new SpotifyPlugin()],
@@ -143,7 +143,7 @@ client.login(process.env.DISCORD_TOKEN);
   </TabItem>
   <TabItem label="Custom extractor">
     ```js
-    import { ExtractorPlugin } from "distube";
+    import { ExtractorPlugin } from "@kattowo/distube";
 
     class CustomExtractor extends ExtractorPlugin {
       async validate(url) {

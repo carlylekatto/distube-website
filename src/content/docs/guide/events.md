@@ -7,7 +7,7 @@ DisTube is event driven. The client emits an event for everything that happens t
 never have to poll.
 
 ```js
-import { Events } from "distube";
+import { Events } from "@kattowo/distube";
 
 distube.on(Events.PLAY_SONG, (queue, song) => {
   // ...
