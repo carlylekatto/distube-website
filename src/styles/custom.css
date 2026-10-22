@@ -1594,3 +1594,8 @@ starlight-tabs [role="tab"][aria-selected="true"] {
   margin-right: 0.35em;
   vertical-align: 0.05em;
 }
+/* The logo of the header sits at the height of the wordmark next to it. */
+header .site-title img {
+  height: 1.4rem;
+  width: auto;
+}

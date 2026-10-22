@@ -1,6 +1,8 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 import starlightTypeDoc, { typeDocSidebarGroup } from "starlight-typedoc";
+import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { markApiKinds } from "./scripts/api-icons.mjs";
 
@@ -12,6 +14,15 @@ const source = process.env.DISTUBE_SOURCE ?? "./source";
 const site = "https://carlylekatto.github.io";
 const base = "/distube-website";
 
+/**
+ * The hash of the favicon goes in the url of it, so the browser asks for the
+ * file again when it changes, and keeps it when it does not.
+ */
+const faviconVersion = createHash("sha256")
+  .update(readFileSync(fileURLToPath(new URL("./public/favicon.svg", import.meta.url))))
+  .digest("hex")
+  .slice(0, 8);
+
 export default defineConfig({
   site,
   base,
@@ -21,7 +32,7 @@ export default defineConfig({
       title: "DisTube",
       description:
         "A powerful Discord.js module for simplifying music commands and effortless playback of various sources with integrated audio filters.",
-      favicon: "/favicon.svg",
+      favicon: `/favicon.svg?v=${faviconVersion}`,
       // The logo is a white silhouette, so it has a version for the light
       // theme and one for the dark theme.
       logo: {
