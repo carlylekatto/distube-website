@@ -35,11 +35,6 @@ const { tagline } = entry.data.hero ?? {
       <div class="landing__hero-grid">
         <!-- Left Column: Headline, CTAs, Package Manager Terminal -->
         <div class="landing__content">
-          <div class="release-pill">
-            <span class="release-pill__dot"></span>
-            <span class="release-pill__text">DisTube 6.0 for discord.js 14</span>
-          </div>
-
           <h1 class="landing__headline">
             Audio playback for <span class="landing__headline-accent">Discord bots</span>.
           </h1>
@@ -103,7 +98,7 @@ const { tagline } = entry.data.hero ?? {
                 <div class="stream-badge">NOW STREAMING</div>
                 <div class="stream-meta">
                   <div class="stream-title">Late Night Lo-Fi Session</div>
-                  <div class="stream-details">YouTube plugin · 3:24 elapsed · Bitrate 160 kbps</div>
+                  <div class="stream-details">source plugin · 3:24 elapsed · Bitrate 160 kbps</div>
                 </div>
               </div>
 
@@ -143,24 +138,20 @@ const { tagline } = entry.data.hero ?? {
         </div>
       </div>
 
-      <!-- Specs & Technical Data Row -->
+      <!-- What the library needs to run -->
       <div class="landing__specs">
-        <dl class="specs-grid">
-          <div class="spec-card">
-            <dt class="spec-card__value">6.0.0</dt>
-            <dd class="spec-card__label">Current release version</dd>
+        <dl class="requirements">
+          <div class="requirements__item">
+            <dt class="requirements__label">Node.js</dt>
+            <dd class="requirements__value">22.12 or later</dd>
           </div>
-          <div class="spec-card">
-            <dt class="spec-card__value">15</dt>
-            <dd class="spec-card__label">Built-in audio filters</dd>
+          <div class="requirements__item">
+            <dt class="requirements__label">discord.js</dt>
+            <dd class="requirements__value">14</dd>
           </div>
-          <div class="spec-card">
-            <dt class="spec-card__value">13</dt>
-            <dd class="spec-card__label">Typed lifecycle events</dd>
-          </div>
-          <div class="spec-card">
-            <dt class="spec-card__value">48 kHz</dt>
-            <dd class="spec-card__label">Audio stream sample rate</dd>
+          <div class="requirements__item">
+            <dt class="requirements__label">FFmpeg</dt>
+            <dd class="requirements__value">on the PATH</dd>
           </div>
         </dl>
       </div>

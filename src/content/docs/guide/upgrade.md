@@ -91,10 +91,10 @@ of the original song is kept.
 
 ```js
 // ❌ Before
-const ytPlugin = distube.plugins.find((p) => p.constructor.name === "YoutubePlugin");
+const plugin = distube.plugins.find((p) => p.constructor.name === "MyPlugin");
 
 // ✅ Now
-const ytPlugin = distube.getPlugin("youtube");
+const plugin = distube.getPlugin("my-source");
 ```
 
 ### The plugins have a lifecycle
@@ -147,14 +147,15 @@ const distube = await DisTube.create(client, { plugins: [new MyPlugin()] });
 
 ## To v5
 
-DisTube does not include any music source any more: they are plugins.
+DisTube does not include any music source any more: they are plugins. The option that used to turn
+a source on is gone, and the sources are given to the client instead:
 
 ```js
-// ❌ Before
-const distube = new DisTube(client, { youtubeDL: true });
+// ❌ Before: an option of the client
+const distube = new DisTube(client, { /* the option of the source */ });
 
 // ✅ Now
-const distube = new DisTube(client, { plugins: [new YtDlpPlugin()] });
+const distube = new DisTube(client, { plugins: [new MyPlugin()] });
 ```
 
 The `play()` method takes a voice channel and an options object, and it **throws** instead of

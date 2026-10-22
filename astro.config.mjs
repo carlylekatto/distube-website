@@ -109,7 +109,7 @@ export default defineConfig({
             { label: "Plugin system", link: "/guide/plugins/" },
             { label: "Audio filters", link: "/guide/filters/" },
             { label: "Discord.js events", link: "/guide/discord-events/" },
-            { label: "YouTube cookies", link: "/guide/youtube-cookies/" },
+            { label: "Source sessions", link: "/guide/source-sessions/" },
             { label: "Upgrading", link: "/guide/upgrade/" },
           ],
         },

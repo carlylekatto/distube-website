@@ -105,6 +105,42 @@ The `GuildVoiceStates` intent is what lets the bot know who is in a voice channe
 DisTube throws a `MISSING_INTENTS` error.
 :::
 
+## 5. Add a music source
+
+DisTube ships no music source. Every service is a plugin, and the plugins live outside the library.
+
+:::caution
+This fork does not maintain the plugins of the upstream repository. They may not work with it, and
+they are not covered by the tests of this fork. Write your own extractor, or use a plugin that you
+trust and that you can keep up to date.
+:::
+
+```js
+import { DisTube, ExtractorPlugin } from "@kattowo/distube";
+
+class MyExtractor extends ExtractorPlugin {
+  override readonly source = "my-source";
+
+  async validate(url) {
+    return url.startsWith("https://audio.example.com/");
+  }
+
+  async resolve(url, options) {
+    // Return a Song or a Playlist.
+  }
+
+  async getStreamURL(song) {
+    return song.url;
+  }
+}
+
+const distube = new DisTube(client, {
+  plugins: [new MyExtractor()],
+});
+```
+
+The [plugin system guide](/guide/plugins/) has the whole API of a plugin.
+
 ## Next
 
 - [Quick start](/getting-started/quick-start/) — build the commands

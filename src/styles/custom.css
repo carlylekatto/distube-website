@@ -289,31 +289,6 @@ button.search-button:hover .sl-icon {
   }
 }
 
-/* Release Pill */
-.release-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background-color: var(--colors-canvas-soft);
-  border: 1px solid var(--colors-hairline);
-  border-radius: var(--rounded-full);
-  padding: 3px 10px;
-  margin-bottom: 1.5rem;
-}
-
-.release-pill__dot {
-  width: 6px;
-  height: 6px;
-  border-radius: var(--rounded-full);
-  background-color: var(--colors-primary);
-}
-
-.release-pill__text {
-  font-size: 12px;
-  font-weight: 400;
-  color: var(--colors-ink-secondary);
-}
-
 /* Hero Headline */
 .landing__headline {
   color: var(--colors-ink);
@@ -790,39 +765,45 @@ button.search-button:hover .sl-icon {
   background-color: transparent;
 }
 
-/* ── Technical Specs Grid ────────────────────────────────────────────────── */
+/* ── Requirements Strip ────────────────────────────────────────────────────── */
 
 .landing__specs {
   padding-inline: clamp(1.5rem, 4vw, 3rem);
 }
 
-.specs-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
-  gap: 1rem;
+.requirements {
+  display: flex;
+  flex-wrap: wrap;
   margin: 0;
+  border-top: 1px solid var(--colors-hairline);
+  border-bottom: 1px solid var(--colors-hairline);
 }
 
-.spec-card {
-  background-color: var(--colors-canvas);
-  border: 1px solid var(--colors-hairline);
-  border-radius: var(--rounded-lg); /* 12px */
-  padding: 1.5rem;
-  box-shadow: var(--shadow-level-1);
+.requirements__item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-right: 1.5rem;
+  padding: 0.85rem 1.5rem 0.85rem 0;
+  border-right: 1px solid var(--colors-hairline);
 }
 
-.spec-card__value {
-  font-size: 32px;
-  font-weight: 500;
-  letter-spacing: -0.72px;
-  color: var(--colors-ink);
-  line-height: 1.15;
+.requirements__item:last-child {
+  margin-right: 0;
+  padding-right: 0;
+  border-right: none;
 }
 
-.spec-card__label {
+.requirements__label {
   font-size: 13px;
   color: var(--colors-ink-mute);
-  margin-top: 4px;
+}
+
+.requirements__value {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--colors-ink);
 }
 
 /* ── Content Sections (index.mdx) ────────────────────────────────────────── */

@@ -6,15 +6,20 @@ description: The music sources of DisTube, and how to write your own.
 DisTube ships **no** music source. Every source is a plugin, so you install and load only the ones
 you actually need.
 
+:::caution
+This fork does not maintain the plugins of the upstream repository. They may not work with it, and
+they are not covered by the tests of this fork. Write your own extractor, or use a plugin that you
+trust and that you can keep up to date.
+:::
+
 ## Using a plugin
 
 ```js
 import { DisTube } from "@kattowo/distube";
-import { YouTubePlugin } from "@distube/youtube";
-import { SpotifyPlugin } from "@distube/spotify";
+import { MyPlugin } from "./my-plugin.js";
 
 const distube = new DisTube(client, {
-  plugins: [new YouTubePlugin(), new SpotifyPlugin()],
+  plugins: [new MyPlugin()],
 });
 ```
 
@@ -29,14 +34,6 @@ A plugin declares the identifiers of its source. The class name is used by defau
 overridden.
 
 ```js
-import { YouTubePlugin } from "@distube/youtube";
-
-const plugin = new YouTubePlugin();
-
-plugin.identifiers; // ["youtube", "yt"]
-```
-
-```js
 class MyPlugin extends ExtractorPlugin {
   readonly source = "my-source";
   readonly aliases = ["ms"];
@@ -44,8 +41,14 @@ class MyPlugin extends ExtractorPlugin {
 ```
 
 ```js
-distube.getPlugin("yt"); // the YouTube plugin
-distube.getPlugin("youtube"); // the same plugin
+const plugin = new MyPlugin();
+
+plugin.identifiers; // ["my-source", "ms"]
+```
+
+```js
+distube.getPlugin("my-source"); // the plugin
+distube.getPlugin("ms"); // the same plugin
 ```
 
 ## The three roles
@@ -61,9 +64,9 @@ In v6 the three classes are merged: `InfoExtractorPlugin` and `PlayableExtractor
 
 ### A plugin that cannot play its own songs
 
-Some sources only give the metadata: Spotify knows the track, but the audio is somewhere else. Such
-a plugin declares `playable: false`, and DisTube looks for a playable version of the song with the
-other plugins.
+Some services only give the metadata: the plugin knows the track, but the audio is somewhere else.
+Such a plugin declares `playable: false`, and DisTube looks for a playable version of the song with
+the other plugins.
 
 ```js
 class MyInfoPlugin extends InfoExtractorPlugin {

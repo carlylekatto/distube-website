@@ -87,14 +87,17 @@ Set it to `0` to turn the detection off.
 
 ## The plugins
 
-### YouTube: `429`, or *"Sign in to confirm you're not a bot"*
+### The source asks for a signed-in session
 
-The YouTube plugin needs cookies. See [YouTube cookies](/guide/youtube-cookies/).
+Some services answer a request that comes from a bot with a challenge, a rate limit, or a refusal.
+A plugin that talks to such a service usually takes a session cookie or a token. The plugin
+documents what it expects, and the symptom is a request that fails with a challenge or with a rate
+limit. See [source sessions](/guide/source-sessions/).
 
-### Spotify: the session expired
+### The session expired
 
-The Spotify plugin uses a session (`sp_dc` and `sp_key`). When it expires, the plugin cannot
-authenticate any more. Export a new session and give it to the plugin.
+A session expires, and the plugin cannot authenticate any more. Export a new one and give it to the
+plugin.
 
 ### The plugin does not find the track
 
@@ -102,7 +105,7 @@ Check the order of the plugins: the first one whose `validate()` returns `true` 
 used to resolve it. Give a URL to the plugin you want, or use the `source` option:
 
 ```js
-await distube.search("faded", { source: "spotify" });
+await distube.search("faded", { source: "my-source" });
 ```
 
 ## The commands
