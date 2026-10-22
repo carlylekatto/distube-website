@@ -125,9 +125,9 @@ version for each theme.
 
 | | |
 | --- | --- |
-| `src/assets/logo-dark.png` | The silhouette, white. The header of the dark theme. |
-| `src/assets/logo-light.png` | The same shape, filled with the ink of the light theme. |
-| `public/favicon.png` | The silhouette on a tile of the accent colour, 128 pixels. |
+| `src/assets/logo-dark.svg` | The silhouette, white. The header of the dark theme. |
+| `src/assets/logo-light.svg` | The same shape, filled with the ink of the light theme. |
+| `public/favicon.svg` | The silhouette on a tile of the accent colour, 64 units wide. |
 
 The logo of the header keeps the colour of the wordmark next to it: near-black in the light theme,
 near-white in the dark one. The accent stays in the favicon, where the shape needs something to sit

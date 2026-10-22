@@ -21,12 +21,12 @@ export default defineConfig({
       title: "DisTube",
       description:
         "A powerful Discord.js module for simplifying music commands and effortless playback of various sources with integrated audio filters.",
-      favicon: "/favicon.png",
+      favicon: "/favicon.svg",
       // The logo is a white silhouette, so it has a version for the light
       // theme and one for the dark theme.
       logo: {
-        light: "./src/assets/logo-light.png",
-        dark: "./src/assets/logo-dark.png",
+        light: "./src/assets/logo-light.svg",
+        dark: "./src/assets/logo-dark.svg",
       },
       customCss: ["./src/styles/custom.css"],
       components: {
