@@ -7,7 +7,6 @@ node_modules/
 
 # generated
 src/content/docs/api/
-public/fonts/
 
 # environment
 .env

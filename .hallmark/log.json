@@ -14,6 +14,20 @@
         "mono": "Azeret Mono Variable"
       },
       "system": "design.md"
+    },
+    {
+      "timestamp": "2026-10-22T06:48:32Z",
+      "scope": "app",
+      "genre": "modern-minimal",
+      "macrostructure": "Marquee Hero",
+      "theme": "Supabase Developer Language",
+      "accent": "#3ecf8e",
+      "fonts": {
+        "display": "Inter",
+        "body": "Inter",
+        "mono": "ui-monospace"
+      },
+      "system": "design.md"
     }
   ]
 }

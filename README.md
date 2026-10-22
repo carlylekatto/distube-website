@@ -8,13 +8,12 @@ it is deployed to GitHub Pages.
 
 ## The design
 
-The site is the panel of a studio device: warm graphite, hairline rules, one red signal colour and
-one amber lamp. The type is [Familjen Grotesk](https://fonts.google.com/specimen/Familjen+Grotesk)
-for the prose and [Azeret Mono](https://fonts.google.com/specimen/Azeret+Mono) for the code and the
-technical values. Both are self hosted, so the page never waits for a third party.
+The design system is written down in [`design.md`](./design.md): a white canvas, an emerald accent,
+the deep code blocks of a developer documentation and a type scale that stays quiet. The type is
+Inter for the prose and the system monospace for the code, so the page asks for nothing.
 
-The waveform of the landing page is generated from a fixed seed, in
-`src/components/Waveform.astro`.
+The landing page shows a mockup of the player, in `src/components/Hero.astro`, and the bars of its
+equalizer come from `src/components/Waveform.astro`.
 
 ## The structure
 

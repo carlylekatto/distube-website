@@ -42,11 +42,7 @@ export default defineConfig({
       head: [
         {
           tag: "meta",
-          attrs: { name: "theme-color", content: "#ed4245" },
-        },
-        {
-          tag: "link",
-          attrs: { rel: "stylesheet", href: "/distube-website/fonts/fonts.css" },
+          attrs: { name: "theme-color", content: "#3ecf8e" },
         },
       ],
       plugins: [
