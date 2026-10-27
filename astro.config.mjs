@@ -117,6 +117,7 @@ export default defineConfig({
             { label: "Handling events", link: "/guide/events/" },
             { label: "Plugin system", link: "/guide/plugins/" },
             { label: "Audio filters", link: "/guide/filters/" },
+            { label: "Audio crossfade", link: "/guide/crossfade/" },
             { label: "Discord.js events", link: "/guide/discord-events/" },
             { label: "Source sessions", link: "/guide/source-sessions/" },
             { label: "Upgrading", link: "/guide/upgrade/" },
