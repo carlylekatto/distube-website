@@ -55,6 +55,10 @@ queue.crossfade = 8;
 queue.scheduleCrossfade();
 ```
 
+The library arms the schedule itself after `playSong`, when a song is added to the queue, when the
+queue resumes, and when it is shuffled. Arming the same schedule twice is a no-op, so a bot that
+re-applies the stored guild settings does not spawn a second transition.
+
 ## Seek-hostile streaming sources
 
 The fade-out input of the transition FFmpeg is seeked near the end of the fading-out song, a few
@@ -78,6 +82,10 @@ const distube = new DisTube(client, {
     //   relative to it; omit it when the input starts exactly at the boundary
     // - `inputArgs` — FFmpeg input options replacing the default ones, which
     //   are tuned for http(s) streaming urls
+    // - `primaryStartTime` — the media timestamp of the fade boundary in the
+    //   replacement input. Set it when the input starts before the requested
+    //   position (a source that can only start on a keyframe, for example) so
+    //   FFmpeg trims the extra audio before the fade.
     preparePrimaryInput: async (url, { seek, song }) => {
       if (!isPlaylistUrl(url)) return null; // fall back to the url as-is
       const local = await trimToTail(url, seek, song.duration);
@@ -98,21 +106,30 @@ back to the original url too: a hostile source degrades to no crossfade, never t
 playback.
 :::
 
+`seek` and `primaryStartTime` are different positions. `seek` is relative to the replacement input;
+`primaryStartTime` is the position of the fade boundary on the media's own timeline. The input
+keeps its timestamps, so it can be trimmed to the same boundary it would have had in the original
+stream.
+
 ## How it works
 
 1. **Warmup pre-spawn**: A few seconds before the fade window starts (controlled by `crossfade.warmup`),
    DisTube pre-spawns an FFmpeg process with two inputs:
    - Input 0: the current song seeked to its tail (`duration - crossfade`).
    - Input 1: the next song from its start.
-2. **Boundary swap**: Exactly when the fade window begins, DisTube checks the playback drift. If
-   playback is on schedule (within 0.75s tolerance), it swaps the audio resource into the Discord
-   player without restarting or respawning the process.
+2. **Boundary swap**: The boundary timer is armed slightly before the fade window. When it fires,
+   DisTube waits for the media clock (`Queue#currentTime`) to reach the boundary, so a slow start
+   or a short network stall neither skips nor replays audio. The swap is accepted within 0.75s
+   after the boundary; a lag of more than 3s, or a wait longer than 4s, falls back to the regular
+   transition. A timer that fires after the boundary cannot recover the audio that already played,
+   so it falls back too.
 3. **Queue progression**: At the swap boundary, the queue emits `finishSong` for the outgoing track
    and `playSong` for the incoming track, shifting the queue state as if the song had naturally
    ended.
 4. **Safety & Fallback**: If the playback drifts excessively, or if a user pauses, seeks, skips,
    stops, shuffles, or jumps tracks during the fade window, the pending transition is automatically
-   canceled and DisTube falls back to a standard track switch.
+   canceled and DisTube falls back to a standard track switch. A seek during the warm-up kills the
+   buffered transition and arms a new schedule from the new position.
 
 The crossfade is opportunistic: every failure degrades gracefully to the regular transition, never
 to a broken playback or a stalled queue.
@@ -123,6 +140,20 @@ A transition stream that has not produced any audio when the fade window opens (
 inputs buffering forever, for example) does not take over the playback. Such a stream is aborted,
 the crossfade state is cleared, and the song keeps its standard transition — the queue never sits
 in a buffering state waiting for the fade.
+
+### A warm-up that finishes at the boundary
+
+Resolving the next song can take longer than the time left before the fade. When the boundary is
+already reached by the time the warm-up finishes, DisTube does not spawn the transition stream: the
+swap would kill it immediately and, on a source that keeps a session open, leave that session
+behind. The queue uses the regular transition instead.
+
+### The fading-out input is padded to the fade duration
+
+The reported song duration is rounded to the second while the media is not. When the media ends
+slightly before the boundary plus the fade duration, `acrossfade` would receive a shorter first
+input and emit no frame at all, which makes the transition look dead. The trimmed input is padded
+with silence to the fade duration, so a short tail fades out instead of aborting the crossfade.
 
 ### A dying transition process
 

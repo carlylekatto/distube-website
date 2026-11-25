@@ -34,6 +34,9 @@ The library is split in three layers:
 | Type | Description |
 | --- | --- |
 | [`DisTubeOptions`](/api/type-aliases/distubeoptions/) | The options of the client. |
+| [`CrossfadeOptions`](/api/type-aliases/crossfadeoptions/) | The crossfade options of the client. |
+| [`CrossfadeStreamOptions`](/api/interfaces/crossfadestreamoptions/) | The options of a crossfade transition stream. |
+| [`PreparedCrossfadeInput`](/api/type-aliases/preparedcrossfadeinput/) | The input returned by the crossfade adapter. |
 | [`PlayOptions`](/api/interfaces/playoptions/) | The options of `DisTube#play()`. |
 | [`SearchOptions`](/api/interfaces/searchoptions/) | The options of a search. |
 | [`SongInfo`](/api/interfaces/songinfo/) | The raw data of a track. |

@@ -12,7 +12,7 @@ order to install them in.
 | --- | --- |
 | [Node.js](https://nodejs.org/) | `22.12.0` or higher |
 | [discord.js](https://discord.js.org/) | `v14` |
-| [@discordjs/voice](https://npmjs.com/package/@discordjs/voice) | `^0.19.0` |
+| [@discordjs/voice](https://npmjs.com/package/@discordjs/voice) | `>=0.19.1` |
 | [@discordjs/opus](https://npmjs.com/package/@discordjs/opus) | `^0.10.0` |
 | [FFmpeg](https://ffmpeg.org/) | any recent version |
 
@@ -79,6 +79,12 @@ bun add @noble/ciphers
 # or
 bun add sodium-native
 ```
+
+:::note
+Discord also requires the DAVE end-to-end encryption since March 2026. `@discordjs/voice` 0.19.1
+implements it and brings its `davey` dependency; DisTube enables it on every voice connection. The
+transport encryption library above is still needed.
+:::
 
 ## 4. Create the client
 

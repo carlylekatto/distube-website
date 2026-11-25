@@ -62,6 +62,12 @@ Try to join the channel before the first track:
 await distube.voices.join(voiceChannel);
 ```
 
+### `Cannot connect to the voice channel after 30 seconds`
+
+Discord requires the DAVE end-to-end encryption since March 2026. Install `@discordjs/voice` 0.19.1
+or later; DisTube enables DAVE on every connection. An older voice package cannot join a voice
+channel, even when a transport encryption library is installed.
+
 ### The bot plays a random track when the queue is empty
 
 The autoplay is on. Turn it off for a guild:

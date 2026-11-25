@@ -31,11 +31,12 @@ const PAGES = [
   { file: "guide/events.md", title: "Handling events", description: "Every event of the library." },
   { file: "guide/plugins.md", title: "Plugin system", description: "The music sources, and how to write one." },
   { file: "guide/filters.md", title: "Audio filters", description: "The built-in filters, and the custom ones." },
+  { file: "guide/crossfade.md", title: "Audio crossfade", description: "Blend the end of a song into the start of the next one." },
   { file: "guide/discord-events.md", title: "Discord.js events", description: "The discord.js events a music bot needs." },
-  { file: "guide/youtube-cookies.md", title: "YouTube cookies", description: "Why a source needs cookies, and how to give them." },
+  { file: "guide/source-sessions.md", title: "Source sessions", description: "Why a music source asks for a signed-in session, and how to give one to a plugin." },
   { file: "guide/upgrade.md", title: "Upgrading", description: "What changed between the major versions." },
   { file: "faq.md", title: "FAQ", description: "The questions that come up the most." },
-  { file: "projects.md", title: "Plugins & bots", description: "The official plugins, the community ones, and the bots." },
+  { file: "projects.md", title: "Plugins & bots", description: "Where the plugins come from, and the bots built with DisTube." },
 ];
 
 /**

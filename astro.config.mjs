@@ -39,7 +39,7 @@ export default defineConfig({
     starlight({
       title: "DisTube",
       description:
-        "A powerful Discord.js module for simplifying music commands and effortless playback of various sources with integrated audio filters.",
+        "A powerful Discord.js module for simplifying music commands and effortless playback of various sources with audio crossfade and integrated audio filters.",
       favicon: `/favicon.svg?v=${faviconVersion}`,
       // The logo is a white silhouette, so it has a version for the light
       // theme and one for the dark theme.

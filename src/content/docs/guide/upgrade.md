@@ -145,6 +145,12 @@ throw new PluginError(PluginErrorCode.NOT_FOUND, "This track does not exist.");
 const distube = await DisTube.create(client, { plugins: [new MyPlugin()] });
 ```
 
+### The voice connection requires DAVE
+
+Discord made the DAVE end-to-end encryption mandatory in March 2026. Install `@discordjs/voice` 0.19.1
+or later; DisTube enables DAVE on every connection. An older voice package fails with
+`VOICE_CONNECT_FAILED` after 30 seconds, even when a transport encryption library is installed.
+
 ## To v5
 
 DisTube does not include any music source any more: they are plugins. The option that used to turn
